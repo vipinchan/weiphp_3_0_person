@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=320, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta content="telephone=no" name="format-detection" /><title>
+    我在招商银行中大奖了！
+</title>
+    <link href="{:ADDON_PUBLIC_PATH}/css/animate.css" rel="stylesheet" type="text/css" />
+    <link href="{:ADDON_PUBLIC_PATH}/css/style.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            window.openId = "{$openId}";
+
+            window.playerName = "{$user['truename']}";
+            
+            window.musicSrc = '{:ADDON_PUBLIC_PATH}/audio/music.mp3';
+            var publicPath = '{:ADDON_PUBLIC_PATH}';
+            var infoUrl = "{:addons_url('CmbLottery://CmbLottery/info')}";
+            var myPrizesUrl = "{:addons_url('CmbLottery://CmbLottery/myPrizes')}";
+            var shakeUrl = "{:addons_url('CmbLottery://CmbLottery/shake')}";
+            var submitPrizeInfoUrl = "{:addons_url('CmbLottery://CmbLottery/submitPrizeInfo')}";
+            var submitValidateInfoUrl = "{:addons_url('CmbLottery://CmbLottery/submitValidateInfo')}";
+            var submitSignInfoUrl = "{:addons_url('CmbLottery://CmbLottery/submitSignInfo')}";
+
+        </script>
+</head>
+<body data-page="index">
+        <div class="slide">
+            <div class="slide-item s1">
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/p2/p1_1_1.jpg" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/p2/p1_1_2.png" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/p2/p1_1_3.png?v=1" class="img-item" border="0" alt="" />
+            </div>
+            <div class="slide-item s9 disabled skip unpreventdefault">
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/bg.jpg" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/logo.png" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/p2/p2_1_1.png?v=1" class="img-item" border="0" alt="" />
+                <div class="content">
+                    <div class="form">
+                        <div>
+                            <input type="text" class="unprevent" name="name" placeholder="点击输入您的姓名" />
+                        </div>
+                        <div>
+                            <input type="tel" class="unprevent" name="phone" placeholder="点击输入您的电话" />
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="button yellow" ontap="window.submitValidateInfo(this)">开始验证</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-item s10 disabled skip">
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/p2/p2_2_1.jpg" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/logo.png" class="img-item" border="0" alt="" />
+                <div class="content">
+                    <div class="name"><span class="ellipsis">XX</span>女士/先生<i></i></div><br/>
+                    <div class="desc">恭喜您获得<span>5</span>次抽奖机会<i></i></div>
+                </div>
+            </div>
+            <div class="slide-item s11 disabled-down">
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/prize_bg.jpg" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/logo.png" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/p2/p2_3_1.png" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/p2/p2_3_2.png?1=1" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/p2/p2_3_3.png" class="img-item" border="0" alt="" />
+                <div class="content">
+                    <div class="desc">剩余<span>5</span>次抽奖机会<i></i></div>
+                </div>
+                <div class="shake" ontap="window.shakeRing(this);"></div>
+            </div>
+            <div class="slide-item s11_1 disabled skip">
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/prize_bg.jpg" class="img-item" border="0" alt="" />
+                <div class="content" data-id="1">
+                    <div class="buttons">
+                        <div class="button yellow" ontap="window.toShakePrizeInfoPage(this)">领取大奖</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-item s12 disabled-up">
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/prize_bg.jpg" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/logo.png" class="img-item" border="0" alt="" />
+                <div class="content">
+                    <div class="name"><span class="ellipsis">XX</span>女士/先生<i></i></div><br/>
+                    <div class="desc">您获得的奖品<i></i></div>
+                    <div class="list">
+                        <div class="table"></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="slide-item s13 disabled skip unpreventdefault">
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/bg.jpg" class="img-item" border="0" alt="" />
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/logo.png" class="img-item" border="0" alt="" />
+
+                <div class="content">
+                    <div class="title">提交您的信息</div>
+                    <div class="tip">小招为您送礼到家</div>
+                    <div class="form">
+                        <div>
+                            <input type="text" class="unprevent" name="name" placeholder="点击输入您的姓名" />
+                        </div>
+                        <div>
+                            <input type="tel" class="unprevent" name="phone" placeholder="点击输入您的电话" />
+                        </div>
+                        <div>
+                            <input type="text" class="unprevent" name="addr" placeholder="点击输入您的地址" />
+                        </div>
+                    </div>
+                    <div class="buttons">
+                            <div class="button yellow" ontap="window.submitPrizeInfo(this)">提交信息</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-item s14 disabled-up skip">
+                <img data-src="{:ADDON_PUBLIC_PATH}/images/p2/p2_4_1.jpg" class="img-item" border="0" alt="" />
+            </div>
+            
+        </div>
+            
+        <div class="music" ontouchstart="event.preventDefault()"></div>
+        <div class="arrow" ontouchstart="event.preventDefault()"></div>
+        <div class="alert hide" ontouchstart="event.preventDefault()"><div class="alert-text">弹窗提示</div><i></i></div>
+        <div class="page-load-mask" ontouchstart="event.preventDefault();">
+            <div style="display:table; width:100%; height:100%;">
+                <div style="display:table-row">
+                    <div style="display:table-cell; vertical-align:middle;">
+                        <span class="page-load-mask-img">&nbsp;</span>
+                        <br/>
+                        <span class="page-load-mask-text">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="company-mask" ontouchstart="event.preventDefault()">
+            <div class="c">
+                <div class="t"></div>
+                <div class="number"><span><span></span></span></div>
+            </div>
+        </div>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/jweixin-1.0.0.js"></script>
+        <!-- <script type="text/javascript" src="http://wx.leborn.cn/zsyhcj/js/wxapi.js"></script> -->
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/wxapi.js"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/fastclick.js"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/hammer.min.js"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/jquery.hammer.js"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/iscroll-probe.min.js"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/shake.js"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/sea.js"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/seajs-log.js"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/seajs-config.js?v=3"></script>
+        <script type="text/javascript" src="{:ADDON_PUBLIC_PATH}/js/seajs-init.js"></script>
+        <script type="text/javascript">
+              wx.config({
+                debug: false,
+                appId: "{$jssdkConfig['appId']}",
+                timestamp: "{$jssdkConfig['timestamp']}",
+                nonceStr: "{$jssdkConfig['nonceStr']}",
+                signature: "{$jssdkConfig['signature']}",
+                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
+              });
+              wx.ready(function () {
+                var title = "我在招商银行中大奖了！";
+                var desc = "相荐欢，享好礼";
+                var link = "{$jssdkConfig['url']}";
+                var imgUrl = "http://wx.juugu.com/Addons/CmbLottery/View/default/Public/images/cmb.png";
+                // 在这里调用 API
+                wx.onMenuShareTimeline({
+                    title: title, // 分享标题
+                    link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: imgUrl, // 分享图标
+                    success: function () { 
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () { 
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+                wx.onMenuShareAppMessage({
+                    title: title, // 分享标题
+                    desc: desc, // 分享描述
+                    link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: imgUrl, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () { 
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () { 
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+              });
+        </script>
+    </body>
+</html>
