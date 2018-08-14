@@ -6,6 +6,8 @@ use Think\Model;
 
 /**
  * 关键词操作
+ * 全系统里关键字要唯一；
+ * 插件在管理关键字时，第一要考虑全局是否有冲突，第二考虑自身更新，不能更新他人的关键字。
  */
 class KeywordModel extends Model {
 	/**
@@ -48,6 +50,19 @@ class KeywordModel extends Model {
 		$data ['addon'] = $addon;
 		$data ['aim_id'] = intval ( $aim_id );
 		$keyword_type === NULL || $data ['keyword_type'] = $keyword_type;
+		return $this->where ( $data )->delete ();
+	}
+	/**
+	 * 根据关键词、插件名删除关键词
+	 *
+	 * @DateTime 2018-08-14T16:24:13+0800
+	 * @author vipinchan
+	 *
+	 * @version [version]
+	 */
+	function deleteByAddon($addon, $keyword) {
+		$data ['addon'] = $addon;
+		$data ['keyword'] = $keyword;
 		return $this->where ( $data )->delete ();
 	}
 	/**

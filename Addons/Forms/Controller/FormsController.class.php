@@ -72,10 +72,13 @@ class FormsController extends AddonsController {
 			// 获取模型的字段信息
 			$Model = $this->checkAttr ( $Model, $model ['id'] );
 			$res = false;
+
+			// 保存时要先删除旧的关键词
+			$act == 'save' && D ( 'Common/Keyword' )->deleteByAddon ( 'Forms', I ( 'keyword' ) );
 			$Model->create () && $res = $Model->$act (); // 这里会自动验证关键字是否存在
 			if ($res !== false) {
 				// 保存关键词
-				$act == 'add' && D ( 'Common/Keyword' )->set ( I ( 'keyword' ), 'Forms', $id );
+				D ( 'Common/Keyword' )->set ( I ( 'keyword' ), 'Forms', $id );
 
 				$act == 'add' && $id = $res;
 
