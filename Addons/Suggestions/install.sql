@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS `wp_suggestions` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+`uid`  varchar(255) NULL  COMMENT '用户ID',
+`content`  text NULL  COMMENT '内容',
+`cTime`  int(10) NULL  COMMENT '创建时间',
+`token`  varchar(255) NULL  COMMENT 'token',
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci CHECKSUM=0 ROW_FORMAT=DYNAMIC DELAY_KEY_WRITE=0;
+INSERT INTO `wp_model` (`name`,`title`,`extend`,`relation`,`need_pk`,`field_sort`,`field_group`,`attribute_list`,`template_list`,`template_add`,`template_edit`,`list_grid`,`list_row`,`search_key`,`search_list`,`create_time`,`update_time`,`status`,`engine_type`,`addon`) VALUES ('suggestions','建议意见表','0','','1','["uid","content","cTime"]','1:基础','','','','','id:ID\r\nuid:用户ID\r\ntruename:名字\r\nmobile:手机号\r\ncontent:内容\r\ncTime|time_format:创建时间\r\nids:操作:[EDIT]|编辑,[DELETE]|删除','10','','','1534295181','1534316835','1','MyISAM','Suggestions');
+INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`model_name`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('uid','用户ID','varchar(255) NULL','string','','','1','','0','','1','1','1534302023','1534302023','','3','','regex','','3','function');
+INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`model_name`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('content','内容','text NULL','textarea','','','1','','0','','1','1','1534302139','1534302139','','3','','regex','','3','function');
+INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`model_name`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('cTime','创建时间','int(10) NULL','datetime','','','1','','0','','1','1','1534314334','1534302205','','3','','regex','','3','function');
+INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`model_name`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('token','token','varchar(255) NULL','string','','','0','','0','','0','1','1534303379','1534303379','','3','','regex','','3','function');
+UPDATE `wp_attribute` a, wp_model m SET a.model_id = m.id WHERE a.model_name=m.`name`;
