@@ -350,6 +350,33 @@ class UserModel extends Model {
 		}
 		return false;
 	}
+
+	/**
+	 * 更新用户信息
+	 * 但不更新用户密码
+	 *
+	 * @DateTime 2018-08-18T13:08:27+0800
+	 * @author vipinchan
+	 *
+	 * @version [version]
+	 * @param [type] 
+	 * @param [type] 
+	 * @return [type]
+	 */
+	public function updateUserWithoutPassword($uid, $data) {
+		if (empty ( $uid ) || empty ( $data )) {
+			$this->error = '参数错误！';
+			return false;
+		}
+		
+		// 不更新用户密码
+		unset($data['password']);
+		$data = $this->_deal_nickname ( $data );
+		
+		// 更新用户信息
+		$res = $this->where ( array ('uid' => $uid ) )->save ( $data );
+		return $res;
+	}
 	
 	/**
 	 * 验证用户密码

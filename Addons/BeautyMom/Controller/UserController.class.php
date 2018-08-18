@@ -35,19 +35,69 @@ class UserController extends BaseController {
                     'in',
                     $uids 
             );
-            $members = M ( 'user' )->where ( $map )->field ( 'uid,nickname,truename,mobile' )->select ();
+            $members = M ( 'user' )->where ( $map )->field ( 'uid,nickname,truename,mobile,sex,headimgurl' )->select ();
             foreach ( $members as $m ) {
                 ! empty ( $m ['truename'] ) || $m ['truename'] = $m ['nickname'];
                 $user [$m ['uid']] = $m;
             }
             foreach ( $list_data ['list_data'] as &$vo ) {
+                $vo ['nickname'] = $user [$vo ['uid']] ['nickname'];
                 $vo ['mobile'] = $user [$vo ['uid']] ['mobile'];
                 $vo ['truename'] = $user [$vo ['uid']] ['truename'];
+                $vo ['sex'] = $user [$vo ['uid']] ['sex'];
+                $vo ['headimgurl'] = $user [$vo ['uid']] ['headimgurl'];
             }
         }
         $this->assign ( $list_data );
         
         $this->display ();
 
-    }           
+    }
+
+    function detail() {
+        $uid = I ( 'uid' );
+        $userInfo = D('User')->getUserInfoByUid($uid);
+        $this->assign ( 'info', $userInfo );
+        
+        $this->display ();
+    }
+
+    function edit() {
+        $id = I ( 'id', 0, 'intval' );
+        $uid = $id;
+        $userInfo = D('User')->getUserInfoByUid($uid);
+
+        $model = $this->getModel ( 'mom_user' );
+
+        if (IS_POST) {
+            // var_dump($_POST);die();
+            $act = empty ( $id ) ? 'add' : 'save';
+            $Model = D ( parse_name ( get_table_name ( $model ['id'] ), 1 ) );
+            // 获取模型的字段信息
+            $Model = $this->checkAttr ( $Model, $model ['id'] );
+
+            $res = false;
+            $Model->create () && $res = $Model->$act ();
+            if ($res !== false) {
+                $baseUserData = array(
+                    'truename' => I('truename'),
+                    'mobile' => I('mobile'),
+                    'birthday' => strtotime(I('birthday')),
+                    'profession' => I('profession'),
+                    'address' => I('address')
+                );
+                D('Common/User')->updateUserWithoutPassword($uid, $baseUserData);
+
+                $this->success ( '保存成功！', U ( 'lists?model=' . $model ['name'], $this->get_param ) );
+            } else {
+                $this->error ( $Model->getError () );
+            }
+        } else {
+            // var_dump($userInfo);
+            // 获取数据
+            $this->assign ( 'data', $userInfo );
+
+            $this->display ( 'edit' );
+        }
+    }
 }

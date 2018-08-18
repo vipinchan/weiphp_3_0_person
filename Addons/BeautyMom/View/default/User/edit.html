@@ -1,0 +1,81 @@
+<extend name="Base/common" />
+<block name="body">
+    <div class="span9 page_message">
+        <section id="contents">
+            <ul class="tab-nav nav">
+                <li class=""><a href="{:U('lists')}">用户管理<b class="arrow fa fa-sort"></b></a></li>
+                <li class="current"><a href="javascript:;">编辑用户信息<b class="arrow fa fa-sort"></b></a></li>
+            </ul>
+            <div class="tab-content">
+                <!-- 表单 -->
+                <php> $post_url || $post_url = U('edit?model='.$model['id'], $get_param);</php>
+                <form id="form" action="{$post_url}" method="post" class="form-horizontal form-center">
+                    <div class="form-item cf">
+                        <label class="item-label"><span class="need_flag">*</span>姓名<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <input type="text" class="text input-large" name="truename" value="{$data.truename}">
+                        </div>
+                    </div>
+                    <div class="form-item cf">
+                        <label class="item-label"><span class="need_flag">*</span>手机号<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <input type="number" class="text input-large" name="mobile" value="{$data.mobile}">
+                        </div>
+                    </div>
+                    <div class="form-item cf">
+                        <label class="item-label"><span class="need_flag">*</span>生日<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <input type="datetime" name="birthday" class="text time" value="{$data.birthday|day_format}" placeholder="请选择时间" />
+                        </div>
+                    </div>
+                    <div class="form-item cf">
+                        <label class="item-label"><span class="need_flag">*</span>宝宝生日<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <input type="datetime" name="baby_birthday" class="text time" value="{$data.baby_birthday|day_format}" placeholder="请选择时间" />
+                        </div>
+                    </div>
+                    <div class="form-item cf">
+                        <label class="item-label"><span class="need_flag">*</span>职业<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <input type="text" class="text input-large" name="profession" value="{$data.profession}">
+                        </div>
+                    </div>
+                    <div class="form-item cf">
+                        <label class="item-label"><span class="need_flag"></span>住址<span class="check-tips"></span></label>
+                        <div class="controls">
+                            <label class="textarea input-large">
+                                <textarea class="text input-large" name="address" style="width:405px; height:150px;">{$data.address}</textarea>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-item form_bh">
+                        <notempty name="data.id">
+                            <input type="hidden" name="id" value="{$data.id}">
+                        </notempty>
+                        <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+                    </div>
+                </form>
+</block>
+<block name="script">
+    <link href="__STATIC__/datetimepicker/css/datetimepicker.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    <php>
+        if(C('COLOR_STYLE')=='blue_color') echo '
+        <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css"> ';
+    </php>
+    <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script>
+    <script type="text/javascript">
+    $('#submit').click(function() {
+        $('#form').submit();
+    });
+    $(function() {
+        $('.time').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language: "zh-CN",
+            minView: 'month',
+            autoclose: true
+        });
+    });
+    </script>
+</block>
