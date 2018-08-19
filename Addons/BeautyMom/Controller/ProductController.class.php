@@ -26,8 +26,11 @@ class ProductController extends BaseController {
         $model = $this->getModel ('mom_product');
         
         // 获取模型列表数据
+        $cateArr = M ( 'mom_product_category' )->where ( $map )->getFields ( 'id,name' );
         $list_data = $this->_get_model_list ( $model );
-        
+        foreach ( $list_data ['list_data'] as &$data ) {
+            $data ['cat_id'] = $cateArr [$data ['cat_id']];
+        }
         $this->assign ( $list_data );
         $this->display ();
 
@@ -42,14 +45,6 @@ class ProductController extends BaseController {
         
         $this->assign ( $list_data );
         $this->display ('lists');
-    }
-
-    function detail() {
-        $uid = I ( 'uid' );
-        $userInfo = D('User')->getUserInfoByUid($uid);
-        $this->assign ( 'info', $userInfo );
-        
-        $this->display ();
     }
 
 /*===============移动端管理-start================*/

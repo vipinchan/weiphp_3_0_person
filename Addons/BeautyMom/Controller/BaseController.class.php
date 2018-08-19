@@ -37,6 +37,13 @@ class BaseController extends AddonsController {
             $nav [] = $res;
         }
 
+        if($controller == 'projectexp') {
+            $res ['title'] = '体验项目';
+            $res ['url'] = addons_url ( 'BeautyMom://ProjectExp/lists', array('mdm'=>I('mdm')) );
+            $res ['class'] = $controller . '/' . $action == 'projectexp/lists' ? 'current' : '';
+            $nav [] = $res;  
+        }
+
         $this->assign ( 'nav', $nav );
     }
 }
