@@ -1,6 +1,5 @@
 <?php
 namespace Addons\BeautyMom\Controller;
-use Home\Controller\AddonsController;
 
 /**
  * 用户管理
@@ -10,14 +9,20 @@ use Home\Controller\AddonsController;
  * @version $Id$
  */
 
-class UserController extends BaseController {
-    
+class UserController extends BaseController {    
     public function index(){
         $this->display();
     }
+/*===============PC端管理-start================*/
 
     /**
-     * 显示指定模型列表数据
+     * 用户列表管理
+     *
+     * @DateTime 2018-08-19T08:09:31+0800
+     * @author vipinchan
+     *
+     * @version [version]
+     * @return [type]
      */
     public function lists() {
         // 获取模型信息
@@ -54,6 +59,15 @@ class UserController extends BaseController {
 
     }
 
+    /**
+     * 查看用户详细信息
+     *
+     * @DateTime 2018-08-19T08:09:48+0800
+     * @author vipinchan
+     *
+     * @version [version]
+     * @return [type]
+     */
     function detail() {
         $uid = I ( 'uid' );
         $userInfo = D('User')->getUserInfoByUid($uid);
@@ -62,6 +76,16 @@ class UserController extends BaseController {
         $this->display ();
     }
 
+    /**
+     * 编辑用户信息
+     * 只会修改不会新增。
+     *
+     * @DateTime 2018-08-19T08:10:03+0800
+     * @author vipinchan
+     *
+     * @version [version]
+     * @return [type]
+     */
     function edit() {
         $id = I ( 'id', 0, 'intval' );
         $uid = $id;
@@ -100,4 +124,82 @@ class UserController extends BaseController {
             $this->display ( 'edit' );
         }
     }
+/*===============PC端管理-end================*/
+
+/*===============移动端管理-start================*/
+
+    function m_detail() {
+        $uid = get_mid();
+        $userInfo = D('User')->getUserInfoByUid($uid);
+        $this->assign ( 'info', $userInfo );
+        
+        $this->display ();
+    }
+
+    function m_regist() {
+        $uid = get_mid();
+        $userInfo = getUserInfo($uid);
+        $model = $this->getModel ( 'mom_user' );
+// var_dump($userInfo);
+        if (IS_POST) {
+            // var_dump($_POST);die();
+            if (!empty(I('truename')) && !empty(I('mobile'))) {
+                $baseUserData = array(
+                    'truename' => I('truename'),
+                    'mobile' => I('mobile')
+                );
+                D('Common/User')->updateUserWithoutPassword($uid, $baseUserData);
+
+                $this->success ( '保存成功！');
+            } else {
+                $this->error ( '姓名或手机号不能为空' );
+            }
+        } else {
+            // var_dump($userInfo);
+            // 获取数据
+            $this->assign ( 'info', $userInfo );
+
+            $this->display ();
+        }
+    }
+
+    function m_edit() {
+        $uid = get_mid();
+        $userInfo = D('User')->getUserInfoByUid($uid);
+        $model = $this->getModel ( 'mom_user' );
+// var_dump($userInfo);
+        if (IS_POST) {
+            // var_dump($_POST);die();
+            $act = 'save';
+            $Model = D ( parse_name ( get_table_name ( $model ['id'] ), 1 ) );
+            // 获取模型的字段信息
+            $Model = $this->checkAttr ( $Model, $model ['id'] );
+
+            $res = false;
+            $Model->create () && $res = $Model->$act ();
+            if ($res !== false) {
+                $baseUserData = array(
+                    'truename' => I('truename'),
+                    'mobile' => I('mobile'),
+                    'birthday' => strtotime(I('birthday')),
+                    'profession' => I('profession'),
+                    'address' => I('address'),
+                    'sex' => I('sex')
+                );
+                D('Common/User')->updateUserWithoutPassword($uid, $baseUserData);
+
+                $this->success ( '保存成功！');
+            } else {
+                $this->error ( $Model->getError () );
+            }
+        } else {
+            // var_dump($userInfo);
+            // 获取数据
+            $this->assign ( 'info', $userInfo );
+
+            $this->display ();
+        }
+    }
+
+/*===============移动端管理-end================*/
 }

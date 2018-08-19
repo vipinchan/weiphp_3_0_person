@@ -39,12 +39,6 @@ class UserModel extends Model {
 		$user['profession'] = $userinfo['profession'];
 		$user['address'] = $userinfo['address'];
 
-		$isSecondBaby = array (
-			0 => '否',
-			1 => '是'
-		);
-		$user['is_second_baby'] = $isSecondBaby[$user['is_second_baby']];
-
 		return $user;
 	}
 

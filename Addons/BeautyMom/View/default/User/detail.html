@@ -32,6 +32,7 @@
                 <label class="item-label">宝宝生日：{$info.baby_birthday|day_format}</label>
               </li>
               <li class="form-item cf">
+                <php>$info['is_second_baby'] = $info['is_second_baby'] == '1' ? '是' : '否'</php>
                 <label class="item-label">是否二胎：{$info.is_second_baby}</label>
               </li>
               <li class="form-item cf">

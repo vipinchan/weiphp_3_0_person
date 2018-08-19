@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>我</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <style>
+    .header {
+        text-align: center;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 100px;
+        margin: 20px auto 10px;
+        display: block;
+    }
+
+    .nickname {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .num_title {
+        padding: 0 10px;
+        height: 1.3em;
+        line-height: 1.3em;
+        text-align: center;
+        color: #cfcfcf;
+        font-size: 14px;
+    }
+
+    .num_val {
+        padding: 0 10px;
+        height: 1.3em;
+        line-height: 1.3em;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .line {
+        top: 0;
+        border-top: 1px solid #e5e5e5;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5);
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="{$info.headimgurl}" alt="" class="avatar">
+        <p class="nickname">{$info.nickname}</p>
+    </div>
+    <div class="main">
+    	<div class="line"></div>
+        <div class="weui-flex" style="margin-top: 10px;">
+            <div class="weui-flex__item">
+                <p class="num_val">{$info.credit_num}</p>
+                <p class="num_title">积分</p>
+            </div>
+            <div class="weui-flex__item">
+                <p class="num_val">¥ {$info.ecard_num}</p>
+                <p class="num_title">余额</p>
+            </div>
+        </div>
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>姓名</p>
+                </div>
+                <div class="weui-cell__ft">{$info.truename}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>手机号</p>
+                </div>
+                <div class="weui-cell__ft">{$info.mobile}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>年龄</p>
+                </div>
+                <div class="weui-cell__ft"><span id="age"></span>岁</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>生日</p>
+                </div>
+                <div class="weui-cell__ft">{$info.birthday|day_format}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>宝宝生日</p>
+                </div>
+                <div class="weui-cell__ft">{$info.baby_birthday|day_format}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>性别</p>
+                </div>
+                <php>$info['sex'] = $info['sex'] == '1' ? '男' : '女'</php>
+                <div class="weui-cell__ft">{$info.sex}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>是否二胎</p>
+                </div>
+                <div class="weui-cell__ft">{$info.is_second_baby}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>职业</p>
+                </div>
+                <div class="weui-cell__ft">{$info.profession}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>住址</p>
+                </div>
+                <div class="weui-cell__ft" style="width: 80%;">{$info.address}</div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<!-- 如果使用了某些拓展插件还需要额外的JS -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script> -->
+<script>
+$(function() {
+    $('#age').text(getAge("{$info.birthday|time_format}"));
+});
+
+function getAge(datetimeStr) {
+    var birthday = new Date(datetimeStr.replace(/-/g, "/"));
+    var today = new Date();
+    var dfYear = Math.floor((today.getFullYear() - birthday.getFullYear()) / 4); // 考虑闰年，4年多一天
+    var dt = today.getTime() - birthday.getTime();
+    var age = Math.ceil((dt / (24 * 3600 * 1000) - dfYear) / 365); // 向上取整
+    return age;
+}
+</script>
+
+</html>

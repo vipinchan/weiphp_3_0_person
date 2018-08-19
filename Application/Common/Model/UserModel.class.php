@@ -375,6 +375,9 @@ class UserModel extends Model {
 		
 		// 更新用户信息
 		$res = $this->where ( array ('uid' => $uid ) )->save ( $data );
+		// 删除缓存
+		$key = 'getUserInfo_' . $uid;
+		S($key, null);
 		return $res;
 	}
 	

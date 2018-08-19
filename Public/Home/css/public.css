@@ -1,0 +1,28 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors VipinChan (vipinchan@hotmail.com)
+ * @date    2018-08-19 14:38:03
+ * @version $Id$
+ */
+
+/* dialog*/
+.box_overlay{ background-color:RGBA(0,0,0,0.5); width:100%; height:100%; position:fixed; top:0; right:0; left:0; bottom:0; z-index:1000;}
+.trans_overlay{width:100%; height:100%; position:fixed; }
+.dialog{ position:fixed; top:0; left:0; right:0; bottom:0; z-index:9999;color:#fff; width:100%; height:100%;display: -webkit-box;
+ -webkit-box-orient: horizontal;
+ -webkit-box-pack: center;
+ -webkit-box-align: center;}
+.dialog_content{width:80%;}
+.common_dialog{border-radius:10px; background-color:#fff; padding:10px; color:#666;}
+.common_dialog h6{ text-align:center; font-size:18px; font-weight:bold}
+.dialog_loading{ height:100px; width:100px; margin:0 auto;border-radius:10px; background:RGBA(0,0,0,.6) url(../images/icon32_loading_dark.gif?201504) center center no-repeat;}
+.dialog_success{ height:80px; width:200px;margin:0 auto;border-radius:10px; background:#333 url(../images/m/success.png?201401) 20px center no-repeat; background-size:40px 40px; padding-left:70px; line-height:80px;font-size:12px; white-space:nowrap}
+.dialog_fail{ height:80px; width:200px;margin:0 auto;border-radius:10px; background:#333 url(../images/m/fail.png?201401) 20px center no-repeat; background-size:40px 40px; padding-left:70px; line-height:80px; font-size:12px; white-space:nowrap}
+.dialog_confirm{ height:auto; width:240px; margin:0 auto; background:#fff; border-radius:10px; padding:0 0 10px}
+.dialog_confirm .title{ padding:10px 10px; font-size:16px; color:#111; text-align:center; border-bottom:1px solid #eee; background:#eee; border-top-left-radius:10px;border-top-right-radius:10px;}
+.dialog_confirm .msg{ padding:10px 10px; color:#666; text-align:center}
+.dialog_confirm .btnWrap{ overflow:hidden; zoom:1;}
+.dialog_confirm .confirmBtn{border-radius:5px;background:#d73c1d; color:#fff; text-align:center; padding:8px 0; display:block; margin:10px 10px 0;}
+.dialog_confirm .rightBtn{ width:41%;border-radius:5px;background:#d73c1d; color:#fff; text-align:center; padding:8px 0; display:block; margin:10px 10px 0; float:right;}
+.dialog_confirm .leftBtn{ width:41%;border-radius:5px;background:#fbbe05; color:#fff; text-align:center; padding:8px 0; display:block; margin:10px 10px 0; float:left;}

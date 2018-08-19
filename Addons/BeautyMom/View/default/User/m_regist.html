@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>填写个人信息</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css?v={:SITE_VERSION}" media="all">
+    <style>
+    .header {
+        text-align: center;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 100px;
+        margin: 20px auto 10px;
+        display: block;
+    }
+
+    .nickname {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .weui-btn {
+        width: 80%;
+        border-radius: 25px;
+        margin-top: 30px;
+    }
+
+    .weui-select {
+        direction: rtl;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="{$info.headimgurl}" alt="" class="avatar">
+        <p class="nickname">{$info.nickname}</p>
+    </div>
+    <php> $post_url || $post_url = U('m_regist', $get_param);</php>
+    <form id="form" class="main" action="{$post_url}" method="post">
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">姓名</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入姓名" id="truename" name="truename" value="{$info.truename}">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">手机号</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入手机号" id="mobile" name="mobile" value="{$info.mobile}">
+                </div>
+            </div>
+            <input type="hidden" name="id" value="{$info.id}">
+            <a href="javascript:;" id="J_SubmitBtn" class="weui-btn weui-btn_primary">确定</a>
+    </form>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<!-- 如果使用了某些拓展插件还需要额外的JS -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/swiper.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/city-picker.min.js"></script> -->
+<script type="text/javascript" src="minify.php?f=__JS__/m/dialog.js&v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__JS__/public.js?v={:SITE_VERSION}"></script>
+<script>
+$(function() {
+
+    $('#J_SubmitBtn').click(function() {
+        // $.Dialog.loading();
+
+        if ($('#truename').val() != undefined && $('#truename').val() == "") {
+            $.Dialog.fail("请填写姓名！"); //成功调用 提示一秒后自动关闭
+            return false;
+        }
+        if ($('#mobile').val() != undefined && $('#mobile').val() == "") {
+            $.Dialog.fail("请填写手机号！"); //成功调用 提示一秒后自动关闭
+            return false;
+        }
+        if (!isMobile($('#mobile').val())) {
+            $.Dialog.fail("请填写合法的手机号！"); //成功调用 提示一秒后自动关闭
+            return false;
+        }
+
+        doAjaxSubmit($('#form'), function(obj) {
+            console.log(obj);
+        });
+    });
+});
+</script>
+
+</html>

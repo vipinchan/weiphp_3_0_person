@@ -123,5 +123,4 @@
 	};
 	
 	$.extend($,{Dialog: Dialog});
-	
 })();

@@ -18,10 +18,24 @@ class BaseController extends AddonsController {
         $controller = strtolower ( _CONTROLLER );
         $action = strtolower ( _ACTION );
         
-        $res ['title'] = '用户管理';
-        $res ['url'] = addons_url ( 'BeautyMom://User/lists' );
-        $res ['class'] = $controller == 'user' ? 'current' : '';
-        $nav [] = $res;
+        if($controller == 'user') {
+            $res ['title'] = '用户管理';
+            $res ['url'] = addons_url ( 'BeautyMom://User/lists', array('mdm'=>I('mdm')) );
+            $res ['class'] = $controller . '/' . $action == 'user/lists' ? 'current' : '';
+            $nav [] = $res;  
+        }
+
+        if($controller == 'product') {
+            $res ['title'] = '产品列表';
+            $res ['url'] = addons_url ( 'BeautyMom://Product/lists', array('mdm'=>I('mdm')) );
+            $res ['class'] = $controller . '/' . $action == 'product/lists' ? 'current' : '';
+            $nav [] = $res;
+
+            $res ['title'] = '产品分类';
+            $res ['url'] = addons_url ( 'BeautyMom://Product/category', array('mdm'=>I('mdm')) );
+            $res ['class'] = $controller . '/' . $action == 'product/category' ? 'current' : '';
+            $nav [] = $res;
+        }
 
         $this->assign ( 'nav', $nav );
     }

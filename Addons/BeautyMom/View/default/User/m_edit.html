@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>修改个人信息</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css?v={:SITE_VERSION}" media="all">
+    <style>
+    .header {
+        text-align: center;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 100px;
+        margin: 20px auto 10px;
+        display: block;
+    }
+
+    .weui-btn {
+        width: 80%;
+        border-radius: 25px;
+        margin-top: 30px;
+    }
+
+    .weui-select {
+        direction: rtl;
+    }
+    </style>
+</head>
+
+<body>
+    <!--     <div class="header">
+        <img src="{$info.headimgurl}" alt="" class="avatar">
+        <p class="nickname">{$info.nickname}</p>
+    </div> -->
+    <php> $post_url || $post_url = U('m_edit', $get_param);</php>
+    <form id="form" class="main" action="{$post_url}" method="post">
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">姓名</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入姓名" id="truename" name="truename" value="{$info.truename}">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">手机号</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入手机号" id="mobile" name="mobile" value="{$info.mobile}">
+                </div>
+            </div>
+            <div class="weui-cell weui-cell_select">
+                <div class="weui-cell__hd" style="padding-left: 15px;">
+                    <label class="weui-label">性别</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <select class="weui-select" name="sex">
+                        <php>$selected = $info['sex']=='1';</php>
+                        <option {$selected ? 'selected' : ''} value="1">男</option>
+                        <option {$selected ? '' : 'selected'} value="2">女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">生日</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" id="birthday" name="birthday" placeholder="请选择生日" value="{$info.birthday|day_format}">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">宝宝生日</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" id="baby_birthday" name="baby_birthday" placeholder="请选择宝宝生日" value="{$info.baby_birthday|day_format}">
+                </div>
+            </div>
+            <div class="weui-cell weui-cell_switch">
+                <div class="weui-cell__bd">是否二胎</div>
+                <div class="weui-cell__ft">
+                    <php>$checked = $info['is_second_baby'] == '1' ? 'checked' : ''</php>
+                    <input class="weui-switch" {$checked} id="J_IsSecondBaby" type="checkbox">
+                    <input type="hidden" name="is_second_baby" id="is_second_baby" value="{$info.is_second_baby}">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">职业</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入职业" name="profession" value="{$info.profession}">
+                </div>
+            </div>
+        </div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" name="address" placeholder="请输入住址" rows="3">{$info.address}</textarea>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="id" value="{$info.id}">
+        <a href="javascript:;" id="J_SubmitBtn" class="weui-btn weui-btn_primary">确定</a>
+    </form>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<!-- 如果使用了某些拓展插件还需要额外的JS -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/swiper.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/city-picker.min.js"></script> -->
+<script type="text/javascript" src="minify.php?f=__JS__/m/dialog.js&v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__JS__/public.js?v={:SITE_VERSION}"></script>
+<script>
+$(function() {
+    $("#birthday").calendar({
+        dateFormat: 'yyyy-mm-dd'
+    });
+    $("#baby_birthday").calendar({
+        dateFormat: 'yyyy-mm-dd'
+    });
+
+    $('#J_SubmitBtn').click(function() {
+        // $.Dialog.loading();
+
+        if ($('#truename').val() != undefined && $('#truename').val() == "") {
+            $.Dialog.fail("请填写姓名！"); //成功调用 提示一秒后自动关闭
+            return false;
+        }
+        if ($('#mobile').val() != undefined && $('#mobile').val() == "") {
+            $.Dialog.fail("请填写手机号！"); //成功调用 提示一秒后自动关闭
+            return false;
+        }
+        if (!isMobile($('#mobile').val())) {
+            $.Dialog.fail("请填写合法的手机号！"); //成功调用 提示一秒后自动关闭
+            return false;
+        }
+
+        doAjaxSubmit($('#form'), function(obj) {
+            console.log(obj);
+        });
+    });
+    $('#J_IsSecondBaby').click(function() {
+        console.log($('#is_second_baby').val());
+        $('#is_second_baby').val($('#is_second_baby').val() == '1' ? '0' : '1');
+    });
+});
+</script>
+
+</html>
