@@ -62,8 +62,8 @@ class ProductController extends BaseController {
     }
 
     public function m_detail() {
-        $id = I('id');
-        $info = M('mom_product')->find();
+        $data['id'] = I('id');
+        $info = M('mom_product')->where($data)->find();
         // var_dump($info);die();
         $this->assign ( 'info', $info );
         $this->display ();
