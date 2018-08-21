@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>项目列表</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css?v={:SITE_VERSION}" media="all">
+    <style>
+    body {
+        background-color: #e5e5e5;
+    }
+
+    .header {
+        text-align: center;
+    }
+
+    .main {
+        padding: 10px;
+    }
+
+    .weui-media-box {
+        padding: 10px;
+    }
+
+    .weui-panel {
+        border-radius: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <ul class="big_pic_list">
+            <volist name="lists" id="vo">
+                <li style="margin-bottom: 15px;">
+                    <php>$url = U('m_detail', 'id='.$vo['id']);</php>
+                    <div class="weui-panel weui-panel_access">
+                        <div class="weui-panel__bd">
+                            <img class="weui-media-box__thumb" src="{$vo.cover|get_cover_url}" width="100%" height="128">
+                        </div>
+                        <div class="weui-panel__bd">
+                            <div class="weui-media-box weui-media-box_text">
+                                <h4 class="weui-media-box__title">{$vo.title}</h4>
+                                <p class="weui-media-box__desc">{$vo.description}</p>
+                            </div>
+                        </div>
+                        <div class="weui-panel__ft">
+                            <div class="weui-cell weui-cell_link">
+                                <a href="{$url}" class="weui-cell__bd">查看更多</a>
+                                <if condition="$vo['userExped']">
+                                    <span class="weui-cell__ft"><a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary weui-btn_warn J_SubmitBtn" data-projectid="{$vo.id}">取消预约</a></span>
+                                    <else/>
+                                    <span class="weui-cell__ft"><a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary J_SubmitBtn" data-projectid="{$vo.id}">立即预约</a></span>
+                                </if>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </volist>
+        </ul>
+        <!--         <ul class="big_pic_list">
+            <volist name="lists" id="vo">
+                <li style="margin-bottom: 15px;">
+                    <php>$url = U('m_detail', 'id='.$vo['id']);</php>
+                    <div class="weui-panel weui-panel_access">
+                        <div class="weui-panel__bd">
+                            <a href="{$url}" class="weui-media-box weui-media-box_appmsg">
+                                <div class="weui-media-box__hd">
+                                    <img class="weui-media-box__thumb" src="{$vo.cover|get_cover_url}">
+                                </div>
+                                <div class="weui-media-box__bd">
+                                    <h4 class="weui-media-box__title">{$vo.title}</h4>
+                                    <p class="weui-media-box__desc">{$vo.description}</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="weui-panel__ft">
+                            <div class="weui-cell weui-cell_link">
+                                <a href="{$url}" class="weui-cell__bd">查看更多</a>
+                                <span class="weui-cell__ft">1111</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </volist>
+        </ul> -->
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<!-- 如果使用了某些拓展插件还需要额外的JS -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script> -->
+<script type="text/javascript" src="minify.php?f=__JS__/m/dialog.js&v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__JS__/public.js?v={:SITE_VERSION}"></script>
+<script>
+$(function() {
+    $('.J_SubmitBtn').click(function() {
+        var id = $(this).data('projectid');
+        var text = $(this).text();
+        var isTrue = text == '立即预约' ? 1 : 0;
+        console.log(text);
+
+        var url = "{:U('applyExp')}";
+        var data = { id: id, isTrue: isTrue };
+        var _this = this;
+        doAjaxGet(url, data, function(obj) {
+            console.log(obj);
+            if(obj.status == 1 && isTrue) {
+                $.toast("预约成功", "text");
+                $(_this).text("取消预约").addClass('weui-btn_warn');
+            } else if(obj.status == 1 && !isTrue) {
+                $.toast("已取消", "text");
+                $(_this).text("立即预约").removeClass('weui-btn_warn');
+            } else {
+                $.Dialog.fail(obj.info);
+                setTimeout(function() {
+                    location.href = "{:U('addon/BeautyMom/User/m_regist')}";
+                }, 2000);
+            }
+        });
+    });
+});
+</script>
+
+</html>

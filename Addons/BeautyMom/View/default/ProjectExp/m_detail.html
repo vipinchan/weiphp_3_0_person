@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>{$info.title}</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css?v={:SITE_VERSION}" media="all">
+    <style>
+    .header {
+        text-align: center;
+    }
+
+    .main {
+        padding: 10px;
+    }
+
+    .line {
+        top: 0;
+        border-top: 1px solid #e5e5e5;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5);
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    #J_CancleBtn,
+    #J_SubmitBtn {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    #J_CancleBtn {
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <section class="content">
+            {$info.content|htmlspecialchars_decode}
+        </section>
+        <a href="javascript:;" id="J_SubmitBtn" onclick="applyExp({$info.id}, 1)" class="weui-btn weui-btn_primary">立即预约</a>
+        <a href="javascript:;" id="J_CancleBtn" onclick="applyExp({$info.id}, 0)" class="weui-btn weui-btn_warn">取消预约</a>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<!-- 如果使用了某些拓展插件还需要额外的JS -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script> -->
+<script type="text/javascript" src="minify.php?f=__JS__/m/dialog.js&v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__JS__/public.js?v={:SITE_VERSION}"></script>
+<script>
+$(function() {
+    var userExped = "{$userExped}";
+    if (userExped == '1') {
+        $('#J_SubmitBtn').hide();
+        $('#J_CancleBtn').show();
+    } else {
+        $('#J_SubmitBtn').show();
+        $('#J_CancleBtn').hide();
+    }
+});
+
+function applyExp(id, isTrue) {
+    var url = "{:U('applyExp')}";
+    var data = { id: id, isTrue: isTrue };
+    doAjaxGet(url, data, function(obj) {
+        console.log(obj);
+        if (obj.status == 1 && isTrue) {
+            $.toast("预约成功", "text");
+            $('#J_SubmitBtn').hide();
+            $('#J_CancleBtn').show();
+        } else if (obj.status == 1 && !isTrue) {
+            $.toast("已取消", "text");
+            $('#J_SubmitBtn').show();
+            $('#J_CancleBtn').hide();
+        } else {
+            $.Dialog.fail(obj.info);
+            setTimeout(function() {
+                location.href = "{:U('addon/BeautyMom/User/m_regist')}";
+            }, 2000);
+        }
+    });
+}
+</script>
+
+</html>
