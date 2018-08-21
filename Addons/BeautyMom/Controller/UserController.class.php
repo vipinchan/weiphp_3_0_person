@@ -101,7 +101,11 @@ class UserController extends BaseController {
             $Model = $this->checkAttr ( $Model, $model ['id'] );
 
             $res = false;
-            $Model->create () && $res = $Model->$act ();
+
+            $data = I ( 'post.' );
+            $date = preg_replace('/-/', '', day_format($userInfo['reg_time']));
+            if(empty($userInfo['memberid'])) $data['memberid'] = $date . substr('000' . $userInfo['id'], -4); // 生成会员ID
+            $Model->create ($data) && $res = $Model->$act ();
             if ($res !== false) {
                 $baseUserData = array(
                     'truename' => I('truename'),
@@ -150,6 +154,14 @@ class UserController extends BaseController {
                 );
                 D('Common/User')->updateUserWithoutPassword($uid, $baseUserData);
 
+
+                if(empty($userInfo['memberid'])) {
+                    $date = preg_replace('/-/', '', day_format($userInfo['reg_time']));
+                    $data['memberid'] = $date . substr('000' . $userInfo['id'], -4); // 生成会员ID
+                    $data['id'] = $userInfo['id'];
+                    M('mom_user')->data($data)->save ();
+                }
+
                 $this->success ( '保存成功！');
             } else {
                 $this->error ( '姓名或手机号不能为空' );
@@ -187,6 +199,13 @@ class UserController extends BaseController {
                     'sex' => I('sex')
                 );
                 D('Common/User')->updateUserWithoutPassword($uid, $baseUserData);
+
+                if(empty($userInfo['memberid'])) {
+                    $date = preg_replace('/-/', '', day_format($userInfo['reg_time']));
+                    $data['memberid'] = $date . substr('000' . $userInfo['id'], -4); // 生成会员ID
+                    $data['id'] = $userInfo['id'];
+                    M('mom_user')->data($data)->save ();
+                }
 
                 $this->success ( '保存成功！');
             } else {

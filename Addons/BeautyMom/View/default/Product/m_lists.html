@@ -55,12 +55,20 @@
         margin-top: -50px;
     }
 
-    .description {
-        line-height: 20px;
-        padding: 8px 15px;
-        color: #333;
-        font-size: 16px;
+    .description-box {
+        padding: 8px 12px;
         background-color: #eee;
+    }
+    .description {
+        color: #333;
+
+        font-size: 13px;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
     }
     </style>
 </head>
@@ -75,7 +83,9 @@
                         <notempty name="vo.cover"><img src="{$vo.cover|get_cover_url}" height="180" width="100%" /></notempty>
                         <div class="title-bg"></div>
                         <div class="title">{$vo.title}</div>
-                        <notempty name="vo.description"><div class="description">{$vo.description}</div></notempty>
+                        <notempty name="vo.description">
+                            <div class="description-box"><div class="description">{$vo.description}</div></div>
+                        </notempty>
                     </a>
                 </li>
             </volist>

@@ -101,6 +101,11 @@ $(function() {
 
         doAjaxSubmit($('#form'), function(obj) {
             console.log(obj);
+            if (obj.status == 1) {
+                $.toast("修改成功");
+            } else {
+                $.toast("修改失败", "forbidden");
+            }
         });
     });
 });

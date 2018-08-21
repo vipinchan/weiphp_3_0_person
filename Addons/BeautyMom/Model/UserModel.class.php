@@ -38,6 +38,7 @@ class UserModel extends Model {
 		$user['birthday'] = $userinfo['birthday'];
 		$user['profession'] = $userinfo['profession'];
 		$user['address'] = $userinfo['address'];
+		$user['reg_time'] = $userinfo['reg_time'];
 
 		return $user;
 	}

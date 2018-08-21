@@ -31,6 +31,34 @@ function doAjaxSubmit(form, callback) {
     });
 }
 
+function doAjaxGet(url, data, callback) {
+    $.Dialog.loading();
+    $.ajax({
+        data: data,
+        type: 'get',
+        dataType: 'json',
+        url: url,
+        success: function(obj) {
+            $.Dialog.close();
+            callback(obj);
+        }
+    });
+}
+
+function doAjaxPost(url, data, callback) {
+    $.Dialog.loading();
+    $.ajax({
+        data: JSON.stringify(data),
+        type: 'post',
+        dataType: 'json',
+        url: url,
+        success: function(obj) {
+            $.Dialog.close();
+            callback(obj);
+        }
+    });
+}
+
 /**
  * 删除指定参数值
  *
