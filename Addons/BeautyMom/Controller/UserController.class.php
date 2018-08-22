@@ -9,7 +9,11 @@ namespace Addons\BeautyMom\Controller;
  * @version $Id$
  */
 
-class UserController extends BaseController {    
+class UserController extends BaseController {
+    function _initialize() {
+        parent::_initialize ();
+    }
+
     public function index(){
         $this->display();
     }
@@ -147,10 +151,13 @@ class UserController extends BaseController {
 // var_dump($userInfo);
         if (IS_POST) {
             // var_dump($_POST);die();
-            if (!empty(I('truename')) && !empty(I('mobile'))) {
+            $truename = I ( 'truename' );
+            $mobile = I ( 'mobile' );
+            if (!empty($truename) && !empty($mobile)) {
+            // if (!empty(I('truename')) && !empty(I('mobile'))) {  // 真是奇葩，这种直接获取request参数判断服务器就是会报500
                 $baseUserData = array(
-                    'truename' => I('truename'),
-                    'mobile' => I('mobile')
+                    'truename' => $truename,
+                    'mobile' => $mobile
                 );
                 D('Common/User')->updateUserWithoutPassword($uid, $baseUserData);
 

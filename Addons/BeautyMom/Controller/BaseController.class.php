@@ -14,6 +14,16 @@ class BaseController extends AddonsController {
     
     function _initialize() {
         parent::_initialize();
+
+        $uid = get_mid();
+        if(isMobile() && isset($uid)) {
+            $openId = get_openid ();
+            if(empty($openId) || $openId == '-1') {
+                header("Content-Type:text/html;charset=UTF-8");
+                echo '只开放微信用户访问';
+                die();
+            }
+        }
         
         $controller = strtolower ( _CONTROLLER );
         $action = strtolower ( _ACTION );
