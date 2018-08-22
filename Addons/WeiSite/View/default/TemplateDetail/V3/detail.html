@@ -1,3 +1,4 @@
+<php>$page_title='';</php>
 <include file="Public/mobile_head"/>	
 <link href="{:CUSTOM_TEMPLATE_PATH}Detail/V3/detail.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
 <body id="weisite">
@@ -9,7 +10,7 @@
         </h6>
         
         <section class="content">
-                <notempty name="info.cover"><p><img src="{$info.cover|get_cover_url}"/></p></notempty>
+                <!-- <notempty name="info.cover"><p><img src="{$info.cover|get_cover_url}"/></p></notempty> -->
                 {$info.content|htmlspecialchars_decode}
         </section>
     </div>

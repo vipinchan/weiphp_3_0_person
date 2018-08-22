@@ -1,4 +1,11 @@
 <extend name="Base/common" />
+<block name="style">
+<style type="text/css">
+    .appmsg_item, .appmsg_sub_item {
+        display: block;
+    }
+</style>
+</block>
 <block name="body">
   <div class="span9 page_message">
     <section id="contents"> <include file="Addons/_nav" />
@@ -40,14 +47,14 @@
             <if condition="$vo[count]==1">
             	<!-- 单图文 -->
                 <li class="appmsg_li">
-                	<div class="appmsg_item">
+                	<a href="{:U('news_detail', 'id='.$vo['id'])}" class="appmsg_item">
                         <h6 class="ellipsis">{$vo.title}</h6>
                         <p class="title">{$vo.cTime|time_format}</p>
                         <div class="main_img">
                             <img src="{$vo.cover_id|get_cover_url}"/>
                         </div>
                         <p class="desc ellipsis">{$vo.intro}</p>
-                    </div>
+                    </a>
                     <div class="appmsg_action">
                     	<a href="{:U('add_material', array('group_id'=>$vo[group_id],'mdm'=>$_GET['mdm']))}">编辑</a>
                         <a href="{:U('del_material_by_groupid', array('group_id'=>$vo[group_id],'mdm'=>$_GET['mdm']))}">删除</a>
@@ -56,21 +63,21 @@
                 <else />
                 <!-- 多图文 -->
                 <li class="appmsg_li">
-                	<div class="appmsg_item">
+                	<a href="{:U('news_detail', 'id='.$vo['id'])}" class="appmsg_item">
                         <p class="title">{$vo.cTime|time_format}</p>
                         <div class="main_img">
                             <img src="{$vo.cover_id|get_cover_url}"/>
                             <h6>{$vo.title}</h6>
                         </div>
                         <p class="desc ellipsis">{$vo.intro}</p>
-                    </div>
+                    </a>
                     <volist name="vo.child" id="vv">
-                    <div class="appmsg_sub_item">
+                    <a href="{:U('news_detail', 'id='.$vv['id'])}" class="appmsg_sub_item">
                         <p class="title ellipsis">{$vv.title}</p>
                         <div class="main_img">
                             <img src="{$vv.cover_id|get_cover_url}"/>
                         </div>
-                    </div>
+                    </a>
                     </volist>
                     <div class="appmsg_action">
                     	<a href="{:U('add_material', array('group_id'=>$vo[group_id]))}">编辑</a>

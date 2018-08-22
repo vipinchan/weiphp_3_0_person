@@ -37,7 +37,7 @@
         height: 1.3em;
         line-height: 1.3em;
         text-align: center;
-        color: #cfcfcf;
+        color: #7b7a7a;
         font-size: 14px;
     }
 
@@ -59,23 +59,29 @@
         width: 80%;
         margin: 0 auto;
     }
+
+    .J_Edit {
+        position: absolute;
+        right: 10px;
+    }
     </style>
 </head>
 
 <body>
+    <a href="{:U('m_edit')}" class="J_Edit">编辑</a>
     <div class="header">
         <img src="{$info.headimgurl}" alt="" class="avatar">
         <p class="nickname">{$info.nickname}</p>
     </div>
     <div class="main">
-    	<div class="line"></div>
+        <div class="line"></div>
         <div class="weui-flex" style="margin-top: 10px;">
             <div class="weui-flex__item">
-                <p class="num_val">{$info.credit_num}</p>
+                <p class="num_val">{$info.credit_num|default='0'}</p>
                 <p class="num_title">积分</p>
             </div>
             <div class="weui-flex__item">
-                <p class="num_val">¥ {$info.ecard_num}</p>
+                <p class="num_val">¥ {$info.ecard_num|default='0.00'}</p>
                 <p class="num_title">余额</p>
             </div>
         </div>
@@ -96,19 +102,21 @@
                 <div class="weui-cell__bd">
                     <p>年龄</p>
                 </div>
-                <div class="weui-cell__ft"><span id="age"></span>岁</div>
+                <div class="weui-cell__ft"><span id="age"></span></div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>生日</p>
                 </div>
-                <div class="weui-cell__ft">{$info.birthday|day_format}</div>
+                <php>$birthday = isset($info['birthday']) ? day_format($info['birthday']) : '待补充';</php>
+                <div class="weui-cell__ft">{$birthday}</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>宝宝生日</p>
                 </div>
-                <div class="weui-cell__ft">{$info.baby_birthday|day_format}</div>
+                <php>$baby_birthday = isset($info['baby_birthday']) ? day_format($info['baby_birthday']) : '待补充';</php>
+                <div class="weui-cell__ft">{$baby_birthday}</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
@@ -121,19 +129,20 @@
                 <div class="weui-cell__bd">
                     <p>是否二胎</p>
                 </div>
+                <php>$info['is_second_baby'] = $info['is_second_baby'] == '1' ? '是' : '否'</php>
                 <div class="weui-cell__ft">{$info.is_second_baby}</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>职业</p>
                 </div>
-                <div class="weui-cell__ft">{$info.profession}</div>
+                <div class="weui-cell__ft">{$info.profession|default='待补充'}</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>住址</p>
                 </div>
-                <div class="weui-cell__ft" style="width: 80%;">{$info.address}</div>
+                <div class="weui-cell__ft" style="width: 80%;">{$info.address|default='待补充'}</div>
             </div>
         </div>
     </div>
@@ -145,7 +154,9 @@
 <!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script> -->
 <script>
 $(function() {
-    $('#age').text(getAge("{$info.birthday|time_format}"));
+    var age = getAge("{$info.birthday|time_format}");
+
+    $('#age').text(age ? age + '岁' : '待补充');
 });
 
 function getAge(datetimeStr) {

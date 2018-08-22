@@ -139,6 +139,11 @@ class UserController extends BaseController {
     function m_detail() {
         $uid = get_mid();
         $userInfo = D('User')->getUserInfoByUid($uid);
+
+        if(empty($userInfo['id'])) {
+            $url = addons_url ( 'BeautyMom://User/m_edit' );
+            redirect( $url );
+        }
         $this->assign ( 'info', $userInfo );
         
         $this->display ();
@@ -161,13 +166,17 @@ class UserController extends BaseController {
                 );
                 D('Common/User')->updateUserWithoutPassword($uid, $baseUserData);
 
-
-                if(empty($userInfo['memberid'])) {
+                $act = 'add';
+                $res = false;
+                $userData['uid'] = $uid;
+                if(!empty($userInfo['id'])) {
+                    $userData['id'] = $userInfo['id'];
+                    $act = 'save';
+                } else {
                     $date = preg_replace('/-/', '', day_format($userInfo['reg_time']));
-                    $data['memberid'] = $date . substr('000' . $userInfo['id'], -4); // 生成会员ID
-                    $data['id'] = $userInfo['id'];
-                    M('mom_user')->data($data)->save ();
+                    $userData['memberid'] = $date . substr('000' . $uid, -4); // 生成会员ID
                 }
+                $res = M('mom_user')->data($userData)->$act();
 
                 $this->success ( '保存成功！');
             } else {
@@ -185,17 +194,28 @@ class UserController extends BaseController {
     function m_edit() {
         $uid = get_mid();
         $userInfo = D('User')->getUserInfoByUid($uid);
-        $model = $this->getModel ( 'mom_user' );
 // var_dump($userInfo);
         if (IS_POST) {
             // var_dump($_POST);die();
-            $act = 'save';
-            $Model = D ( parse_name ( get_table_name ( $model ['id'] ), 1 ) );
-            // 获取模型的字段信息
-            $Model = $this->checkAttr ( $Model, $model ['id'] );
+            $truename = I ( 'truename' );
+            $mobile = I ( 'mobile' );
+            if (empty($truename) || empty($mobile)) {
+                $this->success ( '姓名和手机号不能为空');
+            }
 
+            $act = 'add';
             $res = false;
-            $Model->create () && $res = $Model->$act ();
+            $userData = I('post.');
+            $userData['uid'] = $uid;
+            if(!empty($userData['baby_birthday'])) $userData['baby_birthday'] = strtotime($userData['baby_birthday']);
+            if(!empty($userInfo['id'])) {
+                $userData['id'] = $userInfo['id'];
+                $act = 'save';
+            } else {
+                $date = preg_replace('/-/', '', day_format($userInfo['reg_time']));
+                $userData['memberid'] = $date . substr('000' . $uid, -4); // 生成会员ID
+            }
+            $res = M('mom_user')->data($userData)->$act();
             if ($res !== false) {
                 $baseUserData = array(
                     'truename' => I('truename'),
@@ -207,12 +227,12 @@ class UserController extends BaseController {
                 );
                 D('Common/User')->updateUserWithoutPassword($uid, $baseUserData);
 
-                if(empty($userInfo['memberid'])) {
-                    $date = preg_replace('/-/', '', day_format($userInfo['reg_time']));
-                    $data['memberid'] = $date . substr('000' . $userInfo['id'], -4); // 生成会员ID
-                    $data['id'] = $userInfo['id'];
-                    M('mom_user')->data($data)->save ();
-                }
+                // if(empty($userInfo['memberid'])) {
+                //     $date = preg_replace('/-/', '', day_format($userInfo['reg_time']));
+                //     $data['memberid'] = $date . substr('000' . $userInfo['id'], -4); // 生成会员ID
+                //     $data['id'] = $userInfo['id'];
+                //     M('mom_user')->data($data)->save ();
+                // }
 
                 $this->success ( '保存成功！');
             } else {
