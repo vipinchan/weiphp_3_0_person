@@ -1,0 +1,112 @@
+<extend name="Base/common" />
+<block name="style">
+    <style>
+    .title {
+        color: #FFF;
+        margin-top: 15px;
+        display: block;
+        line-height: 18px;
+        font-size: 12px;
+    }
+
+    .heightlight {
+        color: red;
+        margin-top: 15px;
+        display: block;
+        line-height: 20px;
+        font-size: 18px;
+    }
+
+    .tile .fa-edit, .tile .fa-th-list, .tile .fa-user {
+    	padding: 10px 0 0;
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: inherit;
+        -webkit-font-smoothing: antialiased;
+    }
+    </style>
+</block>
+<block name="body">
+    <div class="span9 page_message">
+        <section id="contents">
+            <include file="Addons/_nav" />
+            <div class="box_title">
+                <h3>当前用户：{$user['truename']}</h3>
+            </div>
+            <div class="box-content">
+                <div class="tab-content has-weixinpreivew">
+                    <h5>快捷操作</h5>
+                    <a class="tile tile_themed" href="{:addons_url('BeautyMom://Order/productCenter',array('uid'=>$uid))}">
+					     <i class="fa-edit"></i>
+					     <div class="div_info">
+					     <strong>新建订单</strong>
+					     </div>
+     				</a>
+                    <a class="tile tile_themed" onClick="$.WeiPHP.openSubmitDialog('会员消费','{:addons_url('Card://Member/do_buy?model='.$model['id'],array('id'=>$data['id']))}',600,600)" href="javascript:;">
+					     <i class="fa-edit"></i>
+					     <div class="div_info">
+					     <strong>新建档案</strong>
+					     </div>
+     				</a>
+                    <a class="tile tile_themed" onClick="$.WeiPHP.openSubmitDialog('用户信息','{:addons_url('BeautyMom://User/detail',array('uid'=>$uid))}',400,600)" href="javascript:;">
+					     <i class="fa-user"></i>
+					     <div class="div_info">
+					     <strong>用户信息</strong>
+					     </div>
+     				</a>
+                    <a class="tile tile_themed" onClick="$.WeiPHP.openSubmitDialog('会员充值','{:addons_url('BeautyMom://User/recharge',array('uid'=>$uid))}',350,300)" href="javascript:;">
+				    	<span class="title">当前余额</span>
+				    	<span class="heightlight">{$user['ecard_num']|default='0'}元</span>
+				    	<div class="div_info">
+				    	<strong>会员充值</strong>
+				    	</div>
+				    </a>
+                </div>
+                <div class="tab-content has-weixinpreivew">
+                    <h5>明细查询</h5>
+                    <a class="tile tile_themed" href="{:addons_url('BeautyMom://User/rechargeQuery',array('uid'=>$uid))}">
+					     <i class="fa-th-list"></i>
+					     <div class="div_info">
+					     <strong>充值查询</strong>
+					     </div>
+     				</a>
+                    <a class="tile tile_themed" href="{:addons_url('BeautyMom://User/creditQuery',array('uid'=>$uid))}">
+				    	<i class="fa-th-list"></i>
+				    	<div class="div_info">
+				    	<strong>积分查询</strong>
+				    	</div>
+				    </a>
+                    <a class="tile tile_themed" href="{:addons_url('BeautyMom://Order/lists',array('uid'=>$uid))}">
+				    	<i class="fa-th-list"></i>
+				    	<div class="div_info">
+				    	<strong>我的订单</strong>
+				    	</div>
+				    </a>
+				    <a class="tile tile_themed" href="{:addons_url('BeautyMom://Order/lists',array('uid'=>$uid))}">
+				    	<i class="fa-th-list"></i>
+				    	<div class="div_info">
+				    	<strong>我的预约</strong>
+				    	</div>
+				    </a>
+                    <a class="tile tile_themed" href="{:addons_url('BeautyMom://User/myProducts',array('uid'=>$uid))}">
+                        <i class="fa-th-list"></i>
+                        <div class="div_info">
+                        <strong>服务项目</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+    //导航高亮
+    // $('.side-sub-menu').find('a[href="{:U('
+    //     Addons / index ')}"]').closest('li').addClass('current');
+    // if ($('ul.tab-nav').length) {
+    //     $('.btn-return').hide();
+    // }
+    </script>
+</block>

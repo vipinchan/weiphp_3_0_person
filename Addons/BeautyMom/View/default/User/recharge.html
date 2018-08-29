@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <include file="Public/head" />
+
+    <body style="background:#fff">
+        <!-- 标签页导航 -->
+        <div class="span9 page_message">
+            <section id="contents">
+                <div class="tab-content" style="padding:0 20px">
+                    <!-- 表单 -->
+                    <form id="form" action="{:U('recharge')}" method="post" class="form-horizontal">
+                        <ul id="tab" class="tab-pane in">
+                            <li class="form-item cf">
+                                <label class="item-label"><span class="need_flag">*</span>充值金额<span class="check-tips"></span></label>
+                                <div class="controls">
+                                    <input type="number" class="text input-4x" name="amount" value="" placeholder="金额"> （元）
+                                </div>
+                            </li>
+<!--                             <li class="form-item cf">
+                                <label class="item-label">备注<span class="check-tips"></span></label>
+                                <div class="controls">
+                                    <input type="number" class="text input-4x" name="remark" value="" placeholder="备注信息选填">
+                                </div>
+                            </li> -->
+                        </ul>
+                </div>
+                <div class="form-item form_bh">
+                    <input type='hidden' name='uid' value='{$uid}' />
+                    <button class="btn submit-btn ajax-post dialog_submit" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+                </div>
+                </form>
+        </div>
+        </section>
+        </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+    </script>
+
+</html>

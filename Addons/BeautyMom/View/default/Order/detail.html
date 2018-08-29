@@ -1,0 +1,94 @@
+<extend name="Base/common" />
+<block name="style">
+    <style>
+    .flex {
+    	display: flex;
+    	padding: 15px 20px;
+    }
+    .flex-item {
+    	flex: 1;
+    }
+    .handle {
+        text-align: right;
+    }
+    </style>
+</block>
+<block name="body">
+    <div class="span9 page_message">
+        <section id="contents">
+            <include file="Addons/_nav" />
+            <div class="box-content">
+                <div class="tab-content has-weixinpreivew">
+                	<if condition="$order['status'] eq '0'">
+                	<div class="handle">
+                		<input type="hidden" name="order_no" class="order_no" value="{$order.order_no}">
+                		<button class="btn ajax-post" target-form="order_no" url="{:U('changeStatus?status=1')}">确认支付</button>
+                		<button class="btn ajax-post" target-form="order_no" url="{:U('changeStatus?status=2')}">取消订单</button>
+                	</div>
+                	</if>
+                    <h5>用户信息</h5>
+                    <div class="flex">
+                    	<div class="flex-item">昵称：{$user.nickname}</div>
+                    	<div class="flex-item">姓名：{$user.truename}</div>
+                    	<div class="flex-item">手机号：{$user.mobile}</div>
+                    	<div class="flex-item">当前积分：{$user.credit_num|default='0'}</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="tab-content has-weixinpreivew">
+                    <h5>订单信息</h5>
+                    <div class="flex">
+                    	<div class="flex-item">订单编号：{$order.order_no}</div>
+                    	<div class="flex-item">订单金额：<span style="color: red;">{$order.amount}(元)</span></div>
+                    </div>
+                    <div class="flex">
+                    	<div class="flex-item">创建时间：{$order.cTime|time_format}</div>
+                    	<php>
+                    		$status = array(
+								0 => '待支付',
+								1 => '已支付',
+								2 => '已作废',
+                    		);
+                    		$statusName = $status[$order['status']];
+                    	</php>
+                    	<div class="flex-item">订单状态：<span style="color: red;">{$statusName}</span></div>
+                    </div>
+                    <div class="data-table">
+                        <div class="table-striped">
+                            <table cellspacing="1">
+                                <!-- 表头 -->
+                                <thead>
+                                    <tr>
+                                        <th>产品名称</th>
+                                        <th>产品价格</th>
+                                        <th>服务次数</th>
+                                    </tr>
+                                </thead>
+                                <!-- 列表 -->
+                                <tbody>
+                                    <volist name="products" id="data">
+                                        <tr>
+                                            <td>{$data.product_title}</td>
+                                            <td>{$data.product_cost}(元)</td>
+                                            <td>{$data.product_service_times}</td>
+                                        </tr>
+                                    </volist>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+    //导航高亮
+    // $('.side-sub-menu').find('a[href="{:U('
+    //     Addons / index ')}"]').closest('li').addClass('current');
+    // if ($('ul.tab-nav').length) {
+    //     $('.btn-return').hide();
+    // }
+    </script>
+</block>
