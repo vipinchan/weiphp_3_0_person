@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>消费查询</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <empty name="products">
+            <div class="weui-msg">
+                <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+                <div class="weui-msg__text-area">
+                    <h2 class="weui-msg__title">暂无数据</h2>
+                </div>
+            </div>
+            <else />
+            <div class="weui-cells">
+                <volist name="products" id="product">
+                	<php>$url = addons_url('BeautyMom://Product/m_detail',array('id'=>$product['product_id']));</php>
+                    <a class="weui-cell weui-cell_access" href="{$url}">
+                        <div class="weui-cell__bd">
+                            <p>{$product.product_title}</p>
+                        </div>
+                        <div class="weui-cell__ft">余<span style="color:red;">{$product.remain_service_times|default='0'}</span>次</div>
+                    </a>
+                </volist>
+            </div>
+        </empty>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+<!-- 如果使用了某些拓展插件还需要额外的JS -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script> -->
+<script>
+$(function() {
+    var age = getAge("{$info.birthday|time_format}");
+
+    $('#age').text(age ? age + '岁' : '待补充');
+});
+
+function getAge(datetimeStr) {
+    var birthday = new Date(datetimeStr.replace(/-/g, "/"));
+    var today = new Date();
+    var dfYear = Math.floor((today.getFullYear() - birthday.getFullYear()) / 4); // 考虑闰年，4年多一天
+    var dt = today.getTime() - birthday.getTime();
+    var age = Math.ceil((dt / (24 * 3600 * 1000) - dfYear) / 365); // 向上取整
+    return age;
+}
+</script>
+
+</html>

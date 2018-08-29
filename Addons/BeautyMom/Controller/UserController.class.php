@@ -463,5 +463,20 @@ class UserController extends BaseController
         }
     }
 
+    /**
+     * 消费查询
+     *
+     * @DateTime 2018-08-29T22:46:33+0800
+     * @author vipinchan
+     * @return   [type]
+     */
+    public function m_myProducts()
+    {
+        $uid      = get_mid();
+        $products = M('mom_order_product')->where(array('uid' => $uid))->select();
+        $this->assign('products', $products);
+        $this->display();
+    }
+
 /*===============移动端管理-end================*/
 }

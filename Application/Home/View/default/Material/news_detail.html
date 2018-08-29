@@ -1,9 +1,10 @@
+<php>$page_title=$info['title'];</php>
 <include file="Public/mobile_head"/>	
 <body style="background:#fff">
 <div class="container">
 	<div class="appmsg_container">
-    	<h6 class="appmsg_title">{$info.title}</h6>
-        <p class="appmsg_info"><span class="time">{$info.cTime|day_format}</span> <span class="author">{$info.author}</span></p>
+<!--     	<h6 class="appmsg_title">{$info.title}</h6>
+        <p class="appmsg_info"><span class="time">{$info.cTime|day_format}</span> <span class="author">{$info.author}</span></p> -->
         <section class="appmsg_content">
 <!--                 <notempty name="info[cover_id]"><p><img src="{$info.cover_id|get_cover_url}"/></p></notempty> -->
                 {$info.content|htmlspecialchars_decode}

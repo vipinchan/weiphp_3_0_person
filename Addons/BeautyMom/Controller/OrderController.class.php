@@ -73,7 +73,9 @@ class OrderController extends BaseController
             $temp['product_id']            = $item['id'];
             $temp['product_title']         = $item['title'];
             $temp['product_service_times'] = $item['service_times'];
+            $temp['remain_service_times'] = $item['service_times'];
             $temp['product_cost']          = $item['cost'];
+            $temp['uid']          = $uid;
             $orderProduct[]                = $temp;
         }
         $res = M('mom_order_product')->addAll($orderProduct);
