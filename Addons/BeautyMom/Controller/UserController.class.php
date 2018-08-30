@@ -53,11 +53,12 @@ class UserController extends BaseController
                 !empty($m['truename']) || $m['truename'] = $m['nickname'];
                 $user[$m['uid']]                         = $m;
             }
+            $sexArr = array('保密', '男', '女');
             foreach ($list_data['list_data'] as &$vo) {
                 $vo['nickname']   = $user[$vo['uid']]['nickname'];
                 $vo['mobile']     = $user[$vo['uid']]['mobile'];
                 $vo['truename']   = $user[$vo['uid']]['truename'];
-                $vo['sex']        = $user[$vo['uid']]['sex'];
+                $vo['sex']        = $sexArr[$user[$vo['uid']]['sex']];
                 $vo['headimgurl'] = $user[$vo['uid']]['headimgurl'];
             }
         }
