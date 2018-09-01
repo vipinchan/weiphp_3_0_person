@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>跳转提示</title>
-<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-<meta content="telephone=no, address=no" name="format-detection">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<php>$page_title = '跳转提示';</php>
+<include file="Public/mobile_head"/>
 <style type="text/css">
 html,body{ background:#f3f3f3;}
 *{ padding:0; margin:0;}
@@ -22,7 +16,6 @@ header img{ width:80px; margin-bottom:40px;}
 100% { -webkit-transform:translate3d(0px, 0, 0px); }
 }
 </style>
-</head>
 <body>
 <div class="jump_tips">
     <present name="message">
@@ -40,24 +33,24 @@ header img{ width:80px; margin-bottom:40px;}
     	<span id="time" class="time"><?php echo($waitSecond); ?></span>
     </p>
     <p class="jump" >
-    	<a id="href" href="<?php echo($jumpUrl); ?>">页面即将跳转跳转</a>
+    	<a id="href" href="<?php echo($jumpUrl); ?>">页面即将跳转</a>
     </p>
 </div>
 <script type="text/javascript">
 (function(){
-	
-var wait = '<?php echo($waitSecond); ?>';
-var href = document.getElementById('href').href;
-var timeDom = document.getElementById("time");
-var interval = setInterval(function(){
-	var time = --wait;
-	timeDom.innerHTML=time;
-	if(time <= 0) {
-		location.href = href;
-		clearInterval(interval);
-	};
-}, 2000);
-
+    var wait = '<?php echo($waitSecond); ?>';
+    var href = document.getElementById('href').href;
+    var timeDom = document.getElementById("time");
+    var message = '{$message}';
+    var interval = setInterval(function(){
+    	var time = --wait;
+    	timeDom.innerHTML=time;
+    	if(time <= 0) {
+    		if(!message) location.href = href;
+            else wx.closeWindow();
+    		clearInterval(interval);
+    	};
+    }, 2000);
 })();
 </script>
 </body>

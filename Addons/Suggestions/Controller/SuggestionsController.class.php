@@ -35,7 +35,9 @@ class SuggestionsController extends AddonsController {
 		
 		$this->display ( $model ['template_list'] );
 	}
-	function suggest() {
+	function suggest($token) {
+		$this->assign('token', $token);
+
 		$config = getAddonConfig ( 'Suggestions' );
 		$this->assign ( $config );
 		
@@ -63,9 +65,12 @@ class SuggestionsController extends AddonsController {
 			$data['token'] = get_token();
 			
 			$res = M ( 'suggestions' )->add ( $data );
-			if ($res)
-				$this->success ( '增加成功，谢谢您的反馈' );
-			else
+			if ($res) {
+				$msg = '增加成功，谢谢您的反馈';
+				if($token == 'gh_4349363de83e') $msg = '再次感谢您对美丽妈妈（五缘湾店）的关心和支持！';
+				$this->assign('closeWin', 1); // 提示后自动关闭当前窗口
+				$this->success ( $msg );
+			} else
 				$this->error ( '增加失败，请稍后再试' );
 		} else {
 			$this->display ();
