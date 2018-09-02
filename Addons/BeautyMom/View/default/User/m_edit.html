@@ -1,46 +1,33 @@
-<!DOCTYPE html>
-<html>
+<php>$page_title = '修改个人信息';</php>
+<include file="Public/mobile_head_weui" />
+<link rel="stylesheet" type="text/css" href="__CSS__/mobiscroll.css?v={:SITE_VERSION}" media="all">
+<link rel="stylesheet" type="text/css" href="__CSS__/mobiscroll_date.css?v={:SITE_VERSION}" media="all">
+<style>
+.header {
+    text-align: center;
+}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="format-detection" content="telephone=no, email=no">
-    <title>修改个人信息</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-    <link rel="stylesheet" type="text/css" href="__CSS__/public.css?v={:SITE_VERSION}" media="all">
-    <style>
-    .header {
-        text-align: center;
-    }
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    margin: 20px auto 10px;
+    display: block;
+}
 
-    .avatar {
-        width: 100px;
-        height: 100px;
-        border-radius: 100px;
-        margin: 20px auto 10px;
-        display: block;
-    }
+.weui-btn {
+    width: 80%;
+    border-radius: 25px;
+    margin-top: 30px;
+}
 
-    .weui-btn {
-        width: 80%;
-        border-radius: 25px;
-        margin-top: 30px;
-    }
-
-    .weui-select {
-        direction: rtl;
-    }
-    .required {
-        color: red;
-    }
-    </style>
-</head>
+.weui-select {
+    direction: rtl;
+}
+.required {
+    color: red;
+}
+</style>
 
 <body>
     <!--     <div class="header">
@@ -102,14 +89,14 @@
                     <input type="hidden" name="is_second_baby" id="is_second_baby" value="{$info.is_second_baby}">
                 </div>
             </div>
-            <div class="weui-cell">
+<!--             <div class="weui-cell">
                 <div class="weui-cell__hd">
                     <label class="weui-label">职业</label>
                 </div>
                 <div class="weui-cell__bd">
                     <input class="weui-input" type="text" placeholder="请输入职业" name="profession" value="{$info.profession}">
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
@@ -122,21 +109,30 @@
         <a href="javascript:;" id="J_SubmitBtn" class="weui-btn weui-btn_primary">确定</a>
     </form>
 </body>
-<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-<!-- 如果使用了某些拓展插件还需要额外的JS -->
-<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/swiper.min.js"></script> -->
-<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/city-picker.min.js"></script> -->
-<script type="text/javascript" src="minify.php?f=__JS__/m/dialog.js&v={:SITE_VERSION}"></script>
-<script type="text/javascript" src="__JS__/public.js?v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="minify.php?f=__JS__/m/mobiscroll_date.js&v={:SITE_VERSION}" charset="gb2312"></script>
+<script type="text/javascript" src="minify.php?f=__JS__/m/mobiscroll.js&v={:SITE_VERSION}"></script>
+
 <script>
 $(function() {
-    $("#birthday").calendar({
-        dateFormat: 'yyyy-mm-dd'
-    });
-    $("#baby_birthday").calendar({
-        dateFormat: 'yyyy-mm-dd'
-    });
+    var currYear = (new Date()).getFullYear();  
+    var opt={};
+    opt.date = {preset : 'date'};
+    opt.datetime = {preset : 'datetime'};
+    opt.time = {preset : 'time'};
+    opt.default = {
+        theme: 'android-ics light', //皮肤样式
+        display: 'modal', //显示方式 
+        mode: 'scroller', //日期选择模式
+        dateFormat: 'yy-mm-dd',
+        lang: 'zh',
+        showNow: true,
+        nowText: "今天",
+        startYear: currYear - 50, //开始年份
+        endYear: currYear + 10 //结束年份
+    };
+    $("#birthday").mobiscroll($.extend(opt['date'], opt['default']));
+
+    $("#baby_birthday").mobiscroll($.extend(opt['date'], opt['default']));
 
     $('#J_SubmitBtn').click(function() {
         // $.Dialog.loading();
@@ -158,6 +154,7 @@ $(function() {
             console.log(obj);
             if (obj.status == 1) {
                 $.toast("修改成功");
+                wx.closeWindow();
             } else {
                 $.toast("修改失败", "forbidden");
             }

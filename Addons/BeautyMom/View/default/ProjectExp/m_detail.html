@@ -45,6 +45,16 @@
     #J_CancleBtn {
         display: none;
     }
+
+    #order_time, #cancel_reason {
+        border: 1px solid #ccc;
+        padding: 3px 5px;
+    }
+
+    .weui-picker-container,
+    .weui-picker-overlay {
+        z-index: 10000;
+    }
     </style>
 </head>
 
@@ -75,25 +85,70 @@ $(function() {
         $('#J_CancleBtn').hide();
     }
 });
+var now = new Date();
+var year = now.getFullYear();
+var month = now.getMonth() + 1;
+month = '0' + month;
+month = month.substring(month.length - 2);
 
 function applyExp(id, isTrue) {
     var url = "{:U('applyExp')}";
     var data = { id: id, isTrue: isTrue };
-    doAjaxGet(url, data, function(obj) {
-        console.log(obj);
-        if (obj.status == 1 && isTrue) {
-            $.toast("预约成功", "text");
-            $('#J_SubmitBtn').hide();
-            $('#J_CancleBtn').show();
-        } else if (obj.status == 1 && !isTrue) {
-            $.toast("已取消", "text");
-            $('#J_SubmitBtn').show();
-            $('#J_CancleBtn').hide();
-        } else {
-            $.Dialog.fail(obj.info);
-            setTimeout(function() {
-                location.href = "{:U('addon/BeautyMom/User/m_regist')}";
-            }, 2000);
+    var html = '';
+    if(isTrue) {
+        html = '<input class="weui-input" readonly="true" type="text" id="order_time" name="order_time" placeholder="请选择预约时间">';
+    } else {
+        html = '<textarea class="weui-textarea" id="cancel_reason" name="cancel_reason" placeholder="请输入取消理由" rows="3"></textarea>';
+    }
+    $.modal({
+        title: "填写信息",
+        text: html,
+        buttons: [
+            { text: "取消", className: "default", onClick: function() { console.log(3) } },
+            {
+                text: "确定",
+                onClick: function() {
+                    data.order_time = $('#order_time').val();
+                    data.cancel_reason = $('#cancel_reason').val();
+                    if(isTrue && !data.order_time) {
+                        $.toast("请选择预约时间", "text");
+                        return false;
+                    }
+
+                    if(!isTrue && !data.cancel_reason) {
+                        $.toast("请输入取消理由", "text");
+                        return false;
+                    }
+                    doAjaxGet(url, data, function(obj) {
+                        console.log(obj);
+                        if (obj.status == 1 && isTrue) {
+                            $.toast("预约成功", "text");
+                            $('#J_SubmitBtn').hide();
+                            $('#J_CancleBtn').show();
+                        } else if (obj.status == 1 && !isTrue) {
+                            $.toast("已取消", "text");
+                            $('#J_SubmitBtn').show();
+                            $('#J_CancleBtn').hide();
+                        } else if(obj.status == -1) {
+                            $.Dialog.fail(obj.info);
+                            setTimeout(function() {
+                                location.href = "{:U('addon/BeautyMom/User/m_regist')}";
+                            }, 2000);
+                        } else {
+                            $.Dialog.fail(obj.info);
+                        }
+                    });
+                }
+            },
+        ]
+    });
+
+    $("#order_time").datetimePicker({
+        title: '请选择时间',
+        years: [year],
+        monthes: [month],
+        onChange: function(picker, values, displayValues) {
+            console.log(values);
         }
     });
 }

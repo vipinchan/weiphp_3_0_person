@@ -56,7 +56,7 @@ class ProductController extends BaseController
 
     public function m_lists()
     {
-        $lists = M('mom_product')->select();
+        $lists = M('mom_product')->where('status=1')->select();
         // var_dump($lists);
         $this->assign('lists', $lists);
         $this->display();

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        <php>echo empty($page_title) ? '' : $page_title;</php>
+    </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css?v={:SITE_VERSION}" media="all">
+    <script type="text/javascript">
+    //静态变量
+    var SITE_URL = "{:SITE_URL}";
+    var IMG_PATH = "__IMG__";
+    var STATIC_PATH = "__STATIC__";
+    var WX_APPID = "{$jsapiParams.appId}";
+    var WXJS_TIMESTAMP = '{$jsapiParams.timestamp}';
+    var NONCESTR = '{$jsapiParams.nonceStr}';
+    var SIGNATURE = '{$jsapiParams.signature}';
+    </script>
+    <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
+    <!-- 如果使用了某些拓展插件还需要额外的JS -->
+    <!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/swiper.min.js"></script> -->
+    <!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/city-picker.min.js"></script> -->
+    <script type="text/javascript" src="minify.php?f=__JS__/m/dialog.js&v={:SITE_VERSION}"></script>
+    <script type="text/javascript" src="minify.php?f=__JS__/public.js&v={:SITE_VERSION}"></script>
+    <script>
+    // 注入微信jssdk api
+    initWxApi();
+    </script>
+</head>
