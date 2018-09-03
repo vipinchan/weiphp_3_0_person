@@ -70,7 +70,7 @@
                     <label class="weui-label">生日</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" id="birthday" name="birthday" placeholder="请选择生日" value="{$info.birthday|day_format}">
+                    <input class="weui-input" type="text" id="birthday" name="birthday" placeholder="请选择生日" value="{$info.birthday|day_format}" readonly="true">
                 </div>
             </div>
             <div class="weui-cell">
@@ -78,7 +78,7 @@
                     <label class="weui-label">宝宝生日</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" id="baby_birthday" name="baby_birthday" placeholder="请选择宝宝生日" value="{$info.baby_birthday|day_format}">
+                    <input class="weui-input" readonly="true" type="text" id="baby_birthday" name="baby_birthday" placeholder="请选择宝宝生日" value="{$info.baby_birthday|day_format}">
                 </div>
             </div>
             <div class="weui-cell weui-cell_switch">
@@ -109,8 +109,8 @@
         <a href="javascript:;" id="J_SubmitBtn" class="weui-btn weui-btn_primary">确定</a>
     </form>
 </body>
-<script type="text/javascript" src="minify.php?f=__JS__/m/mobiscroll_date.js&v={:SITE_VERSION}" charset="gb2312"></script>
-<script type="text/javascript" src="minify.php?f=__JS__/m/mobiscroll.js&v={:SITE_VERSION}"></script>
+<script type="text/javascript" src="__JS__/m/mobiscroll_date.js?v=11"></script>
+<script type="text/javascript" src="minify.php?f=__JS__/m/mobiscroll.js&v=11"></script>
 
 <script>
 $(function() {
