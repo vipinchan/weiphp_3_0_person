@@ -364,7 +364,7 @@ class UserController extends BaseController
     public function m_regist()
     {
         $uid      = get_mid();
-        $userInfo = getUserInfo($uid);
+        $userInfo = D('User')->getUserInfoByUid($uid);
         $model    = $this->getModel('mom_user');
 // var_dump($userInfo);
         if (IS_POST) {

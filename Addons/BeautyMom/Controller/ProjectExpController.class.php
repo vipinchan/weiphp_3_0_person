@@ -31,6 +31,9 @@ class ProjectExpController extends BaseController
 
         // 获取模型列表数据
         $list_data = $this->_get_model_list($model);
+        foreach ($list_data['list_data'] as &$data) {
+            $data['current_count'] = $this->_getExpUserCount($data['id']);
+        }
 
         $this->assign($list_data);
         $this->display();
@@ -92,6 +95,7 @@ class ProjectExpController extends BaseController
             $projectid            = $project['id'];
             $uid                  = get_mid();
             $project['userExped'] = $this->_userIsExped($projectid, $uid) ? '1' : '0';
+            $project['isOverExp'] = $this->_isOverExp($projectid) ? 1 : 0;
         }
         $this->assign('lists', $lists);
         $this->display();
@@ -106,45 +110,20 @@ class ProjectExpController extends BaseController
 
         $userExped = $this->_userIsExped(I('id'), get_mid()) ? '1' : '0';
         $this->assign('userExped', $userExped);
+
+        // 判断预约是否满了
+        $isOverExp = $this->_isOverExp(I('id'));
+        $this->assign('isOverExp', $isOverExp ? 1 : 0);
         $this->display();
     }
 
     /**
-     * 判断用户是否已预约
+     * 申请预约项目
      *
-     * @DateTime 2018-08-20T22:38:48+0800
+     * @DateTime 2018-09-09T12:34:37+0800
      * @author vipinchan
-     *
-     * @version [version]
-     * @param [type]
-     * @param [type]
-     * @return [type]
+     * @return   [type]
      */
-    public function _userExped($projectid, $uid)
-    {
-        $data['projectid'] = $projectid;
-        $data['uid']       = $uid;
-        $model             = M('mom_projectexpid_uid');
-        $info              = $model->where($data)->find();
-        if (!$info) {
-            return null;
-        }
-
-        return $info;
-    }
-
-    public function _userIsExped($projectid, $uid)
-    {
-        $data['projectid'] = $projectid;
-        $data['uid']       = $uid;
-        $data['status']     = 1;
-        $model             = M('mom_projectexpid_uid');
-        $info              = $model->where($data)->find();
-        if (!$info)  return false;
-
-        return true;
-    }
-
     public function applyExp()
     {
         $projectid     = I('id');
@@ -152,6 +131,10 @@ class ProjectExpController extends BaseController
         $cancel_reason = I('cancel_reason');
         $order_time    = I('order_time');
         $uid           = get_mid();
+
+        if(empty($projectid)) {
+            $this->error('参数有误');
+        }
 
         if (!get_truename($uid)) {
             $this->error('请先填写注册信息', -1);
@@ -180,6 +163,9 @@ class ProjectExpController extends BaseController
             $model     = M('mom_projectexpid_uid');
             $userExped = $this->_userExped($projectid, $uid);
             if ($isTrue == 1) {
+                if($this->_isOverExp($projectid)) {
+                    $this->error('预约已满');die();
+                }
                 if ($userExped == null) {
                     // not found
                     $data['cTime']  = time();
@@ -206,4 +192,86 @@ class ProjectExpController extends BaseController
     }
 
 /*===============移动端管理-end================*/
+
+    /**
+     * 获取当前项目已预约用户数
+     *
+     * @DateTime 2018-09-09T12:37:37+0800
+     * @author vipinchan
+     * @param    [type]
+     * @return   [type]
+     */
+    public function _getExpUserCount($projectid) {
+        $data['projectid'] = $projectid;
+        $data['status']     = 1;
+        $model             = M('mom_projectexpid_uid');
+        $list              = $model->where($data)->select();
+
+        return count($list);
+    }
+
+    /**
+     * 判断预约是否满了
+     *
+     * @DateTime 2018-09-04T00:31:35+0800
+     * @author vipinchan
+     * @param    [type]
+     * @return   boolean
+     */
+    public function _isOverExp($projectid) {
+        $data['projectid'] = $projectid;
+        $data['status']     = 1;
+        $model             = M('mom_projectexpid_uid');
+        $list              = $model->where($data)->select();
+
+        $info       = M('mom_project_exp')->where('id = '. $projectid)->find();
+        if(!empty($info['limit_count']) && count($list) >= $info['limit_count']) return true;
+
+        return false;
+    }
+
+    /**
+     * 获取已预约用户信息
+     *
+     * @DateTime 2018-08-20T22:38:48+0800
+     * @author vipinchan
+     *
+     * @version [version]
+     * @param [type]
+     * @param [type]
+     * @return [type]
+     */
+    public function _userExped($projectid, $uid)
+    {
+        $data['projectid'] = $projectid;
+        $data['uid']       = $uid;
+        $model             = M('mom_projectexpid_uid');
+        $info              = $model->where($data)->find();
+        if (!$info) {
+            return null;
+        }
+
+        return $info;
+    }
+
+    /**
+     * 判断用户是否已预约
+     *
+     * @DateTime 2018-09-09T12:35:03+0800
+     * @author vipinchan
+     * @param    [type]
+     * @param    [type]
+     * @return   [type]
+     */
+    public function _userIsExped($projectid, $uid)
+    {
+        $data['projectid'] = $projectid;
+        $data['uid']       = $uid;
+        $data['status']     = 1;
+        $model             = M('mom_projectexpid_uid');
+        $info              = $model->where($data)->find();
+        if (!$info)  return false;
+
+        return true;
+    }
 }
