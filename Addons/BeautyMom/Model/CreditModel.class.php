@@ -32,4 +32,25 @@ class CreditModel extends Model {
     	$data['cTime'] = time();
     	return $this->data($data)->add();
     }
+
+    /**
+     * 提交订单产生积分
+     *
+     * @DateTime 2018-10-03T21:58:46+0800
+     * @author vipinchan
+     * @param    [type]
+     * @return   [type]
+     */
+    function handleOrderCredit($order) {
+        // 变更用户积分
+        $uid                    = $order['uid'];
+        $userInfo               = D('User')->getUserInfoByUid($uid);
+        $userData['id']         = $userInfo['id'];
+        $getCreditNum           = intval($order['amount'] / 100);
+        $userData['credit_num'] = $userInfo['credit_num'] + $getCreditNum; // 100元1积分
+        M('mom_user')->data($userData)->save();
+
+        // 添加积分变更记录
+        return $this->handleCredit($uid, $getCreditNum, 'order', $order['order_no']);
+    }
 }

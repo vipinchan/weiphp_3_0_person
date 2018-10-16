@@ -103,6 +103,28 @@ class BaseController extends AddonsController
             }
         }
 
+        if ($controller == 'archives') {
+            $res['title'] = '产后体型体重管理';
+            $res['url']   = addons_url('BeautyMom://Archives/lists', array('mdm' => I('mdm')));
+            $res['class'] = $controller . '/' . $action == 'archives/lists' ? 'current' : '';
+            $nav[]        = $res;
+
+            $res['title'] = '胸部养护';
+            $res['url']   = addons_url('BeautyMom://Archives/chestLists', array('mdm' => I('mdm')));
+            $res['class'] = $controller . '/' . $action == 'archives/chestlists' ? 'current' : '';
+            $nav[]        = $res;
+
+            $res['title'] = '体质调理';
+            $res['url']   = addons_url('BeautyMom://Archives/physiqueLists', array('mdm' => I('mdm')));
+            $res['class'] = $controller . '/' . $action == 'archives/physiquelists' ? 'current' : '';
+            $nav[]        = $res;
+
+            $res['title'] = '妊娠纹及疤痕改善';
+            $res['url']   = addons_url('BeautyMom://Archives/scarLists', array('mdm' => I('mdm')));
+            $res['class'] = $controller . '/' . $action == 'archives/scarlists' ? 'current' : '';
+            $nav[]        = $res;
+        }
+
         $this->assign('nav', $nav);
     }
 }

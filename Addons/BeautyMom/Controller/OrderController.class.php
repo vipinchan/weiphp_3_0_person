@@ -50,7 +50,7 @@ class OrderController extends BaseController
      * @param    [type]
      * @return   [type]
      */
-    public function submitOrder($ids, $uid)
+    public function submitOrder($ids = null, $uid = null)
     {
         if (empty($ids) || empty($uid)) {
             $this->error('请选择产品');
@@ -177,5 +177,60 @@ class OrderController extends BaseController
             }
         }
         $this->error('操作失败');
+    }
+
+    public function pay($order_no) {
+        $order    = M('mom_order')->where(array('order_no' => $order_no))->find();
+        $userInfo = D('User')->getUserInfoByUid($order['uid']);
+
+        if (IS_POST) {
+            $pay_by_ecard = I('pay_by_ecard');
+            $pay_by_cash = I('pay_by_cash');
+
+            if (empty($pay_by_ecard) && empty($pay_by_cash)) {
+                $this->error('金额不能为空');
+            }
+            $ecard = floatval($pay_by_ecard);
+            $cash = floatval($pay_by_cash);
+            // var_dump($userInfo['ecard_num']);die();
+            if($ecard > $userInfo['ecard_num'] || $ecard + $cash != $order['amount']) {
+                $this->error('支付金额不对，请重新核对');
+            }
+
+            $status = 1; // 已支付状态
+            $order = M('mom_order')->where(array('order_no' => $order_no))->find();
+
+            if ($order['status'] == '0') {
+                $orderData['id']     = $order['id'];
+                $orderData['status'] = $status;
+                $orderData['pay_by_cash'] = $cash;
+                $orderData['pay_by_ecard'] = $ecard;
+                if (M('mom_order')->data($orderData)->save()) {
+                    // 添加积分变更记录
+                    D('Credit')->handleOrderCredit($order);
+
+                    $data['uid']    = $order['uid'];
+                    $data['amount'] = -$ecard;  // 本次使用余额支付金额
+                    $data['remark'] = '订单消费';
+
+                    // 入库，充值记录表
+                    $data['mid']   = $this->mid;
+                    $data['cTime'] = time();
+                    M('mom_ecard_log')->data($data)->add();
+                    // 入库，用户当前金额
+                    $user['id'] = $userInfo['id'];
+                    $user['ecard_num'] = floatval($userInfo['ecard_num']) - $ecard;
+                    $res = M('mom_user')->data($user)->save();
+
+                    if($res) $this->success('操作成功');
+                }
+            }
+
+            $this->error('操作失败');
+        }
+
+        $this->assign('order', $order);
+        $this->assign('user', $userInfo);
+        $this->display();
     }
 }

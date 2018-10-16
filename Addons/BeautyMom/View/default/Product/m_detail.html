@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="format-detection" content="telephone=no, email=no">
-    <title>{$info.title}</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
+<php>$page_title = $info['title'];</php>
+<include file="Public/mobile_head_weui" />
     <style>
     .header {
         text-align: center;
@@ -33,7 +20,6 @@
         margin: 0 auto;
     }
     </style>
-</head>
 
 <body>
     <div class="main">
@@ -42,11 +28,6 @@
         </section>
     </div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-<!-- 如果使用了某些拓展插件还需要额外的JS -->
-<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script> -->
-<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script> -->
 <script>
 $(function() {});
 </script>

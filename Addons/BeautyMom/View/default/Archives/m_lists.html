@@ -1,0 +1,41 @@
+<php>$page_title = '体检记录';</php>
+<include file="Public/mobile_head_weui" />
+    <style>
+    .header {
+        text-align: center;
+    }
+
+    .main {
+        padding: 10px;
+    }
+    </style>
+
+<body>
+    <div class="main">
+        <empty name="lists">
+        <div class="weui-msg">
+            <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+            <div class="weui-msg__text-area">
+                <h2 class="weui-msg__title">暂无数据</h2>
+            </div>
+        </div>
+        </empty>
+        <div class="weui-cells">
+            <volist name="lists" id="vo">
+              <php>$url = U('m_view', array('id'=>$vo['id'], 'model'=>$modelId));</php>
+              <a class="weui-cell weui-cell_access" href="{$url}">
+                <div class="weui-cell__bd">
+                  <p>体检时间：{$vo.check_time|day_format}</p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+              </a>
+            </volist>
+        </div>
+    </div>
+</body>
+<script>
+$(function() {});
+</script>
+
+</html>

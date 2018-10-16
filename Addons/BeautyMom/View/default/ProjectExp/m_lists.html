@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="format-detection" content="telephone=no, email=no">
-    <title>项目列表</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css">
-    <link rel="stylesheet" type="text/css" href="__CSS__/public.css?v={:SITE_VERSION}" media="all">
+<php>$page_title = '项目列表';</php>
+<include file="Public/mobile_head_weui" />
     <style>
     body {
         background-color: #e5e5e5;
@@ -46,7 +32,6 @@
         z-index: 10000;
     }
     </style>
-</head>
 
 <body>
     <div class="main">
@@ -108,13 +93,7 @@
         </ul> -->
     </div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
-<!-- 如果使用了某些拓展插件还需要额外的JS -->
-<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script> -->
-<!-- <script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script> -->
 <script type="text/javascript" src="minify.php?f=__JS__/m/dialog.js&v={:SITE_VERSION}"></script>
-<script type="text/javascript" src="__JS__/public.js?v={:SITE_VERSION}"></script>
 <script>
 $(function() {
     var now = new Date();

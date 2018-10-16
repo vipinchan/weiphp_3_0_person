@@ -43,12 +43,12 @@
 					     <strong>新建订单</strong>
 					     </div>
      				</a>
-                    <a class="tile tile_themed" onClick="$.WeiPHP.openSubmitDialog('会员消费','{:addons_url('Card://Member/do_buy?model='.$model['id'],array('id'=>$data['id']))}',600,600)" href="javascript:;">
+<!--                     <a class="tile tile_themed" onClick="$.WeiPHP.openSubmitDialog('会员消费','{:addons_url('Card://Member/do_buy?model='.$model['id'],array('id'=>$data['id']))}',600,600)" href="javascript:;">
 					     <i class="fa-edit"></i>
 					     <div class="div_info">
 					     <strong>新建档案</strong>
 					     </div>
-     				</a>
+     				</a> -->
                     <a class="tile tile_themed" onClick="$.WeiPHP.openSubmitDialog('用户信息','{:addons_url('BeautyMom://User/detail',array('uid'=>$uid))}',400,600)" href="javascript:;">
 					     <i class="fa-user"></i>
 					     <div class="div_info">
@@ -68,13 +68,13 @@
                     <a class="tile tile_themed" href="{:addons_url('BeautyMom://User/rechargeQuery',array('uid'=>$uid))}">
 					     <i class="fa-th-list"></i>
 					     <div class="div_info">
-					     <strong>充值查询</strong>
+					     <strong>充值记录查询</strong>
 					     </div>
      				</a>
                     <a class="tile tile_themed" href="{:addons_url('BeautyMom://User/creditQuery',array('uid'=>$uid))}">
 				    	<i class="fa-th-list"></i>
 				    	<div class="div_info">
-				    	<strong>积分查询</strong>
+				    	<strong>积分记录查询</strong>
 				    	</div>
 				    </a>
                     <a class="tile tile_themed" href="{:addons_url('BeautyMom://Order/lists',array('uid'=>$uid))}">

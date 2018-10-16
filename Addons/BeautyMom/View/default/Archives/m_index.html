@@ -1,0 +1,61 @@
+<php>$page_title = '个人档案';</php>
+<include file="Public/mobile_head_weui" />
+    <style>
+    .header {
+        text-align: center;
+        background-color: #3cc51f;
+        padding: 15px 0;
+    }
+    .h-title {
+    	color: #FFF;
+    }
+
+    .main {
+    }
+    .weui-cells {
+        margin: 0;
+    }
+    </style>
+
+<body>
+<div class="header">
+      <h1 class="h-title">个人档案</h1>
+    </div>
+    <div class="main">
+<div class="weui-cells">
+  <a class="weui-cell weui-cell_access" href="{:U('m_lists', 'archivesType=body')}">
+    <div class="weui-cell__bd">
+      <p>产后体型体重管理</p>
+    </div>
+    <div class="weui-cell__ft">
+    </div>
+  </a>
+  <a class="weui-cell weui-cell_access" href="{:U('m_lists', 'archivesType=chest')}">
+    <div class="weui-cell__bd">
+      <p>胸部养护</p>
+    </div>
+    <div class="weui-cell__ft">
+    </div>
+  </a>
+  <a class="weui-cell weui-cell_access" href="{:U('m_lists', 'archivesType=physique')}">
+    <div class="weui-cell__bd">
+      <p>体质调理</p>
+    </div>
+    <div class="weui-cell__ft">
+    </div>
+  </a>
+  <a class="weui-cell weui-cell_access" href="{:U('m_lists', 'archivesType=scar')}">
+    <div class="weui-cell__bd">
+      <p>妊娠纹及疤痕改善</p>
+    </div>
+    <div class="weui-cell__ft">
+    </div>
+  </a>
+</div>
+    </div>
+</body>
+<script>
+$(function() {});
+</script>
+
+</html>

@@ -29,7 +29,7 @@ class FormsValueController extends BaseController {
 	
 	// 通用插件的列表模型
 	public function lists() {
-		$this->assign ( 'add_button', false );
+		// $this->assign ( 'add_button', false );
 		$this->assign ( 'search_button', false );
 		// 解析列表规则
 		$fields [] = 'openid';

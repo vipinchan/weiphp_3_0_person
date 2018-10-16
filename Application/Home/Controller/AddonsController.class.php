@@ -128,6 +128,7 @@ class AddonsController extends Controller {
 	public function edit($model = null, $id = 0) {
 		
 		is_array ( $model ) || $model = $this->getModel ( $model );
+
 		$templateFile = $this->getAddonTemplate ( $model ['template_edit'] );
 		parent::common_edit ( $model, $id, $templateFile );
 		
@@ -207,11 +208,10 @@ class AddonsController extends Controller {
 	function nulldeal() {
 		$this->display ( T ( 'home/Addons/nulldeal' ) );
 	}
-	function mobileForm() {
+	function mobileForm($model = null) {
 		defined ( '_ACTION' ) or define ( '_ACTION', 'mobileForm' );
-		
-		$model = $this->getModel ( $model );
-		
+		is_array ( $model ) || $model = $this->getModel ( $model );
+
 		if (IS_POST) {
 			$Model = D ( parse_name ( get_table_name ( $model ['id'] ), 1 ) );
 			// 获取模型的字段信息

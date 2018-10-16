@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<style>
+	.pay-tips {
+		line-height: 30px;
+		height: 30px;
+		background-color: #f7f4d4;
+		padding: 0 20px;
+		margin-bottom: 20px;
+	}
+</style>
+<head>
+    <include file="Public/head" />
+
+    <body style="background:#fff">
+        <!-- 标签页导航 -->
+        <div class="span9 page_message">
+            <section id="contents">
+                <div class="pay-tips">订单金额<span style="color:red;">{$order.amount}</span>元，请选择支付方式？</div>
+                <div class="tab-content" style="padding:0 20px">
+                    <!-- 表单 -->
+                    <form id="form" action="{:U('pay?order_no='.$order['order_no'])}" method="post" class="form-horizontal">
+                        <ul id="tab" class="tab-pane in">
+                            <li class="form-item cf">
+                                <label class="item-label">会员卡余额支付<span class="check-tips">(余额{$user.ecard_num|default=0}元)</span></label>
+                                <div class="controls">
+                                    <input type="number" class="text input-4x" name="pay_by_ecard" value="" placeholder="0.00"> （元）
+                                </div>
+                            </li>
+                            <li class="form-item cf">
+                                <label class="item-label">现金支付<span class="check-tips"></span></label>
+                                <div class="controls">
+                                    <input type="number" class="text input-4x" name="pay_by_cash" value="" placeholder="0.00"> （元）
+                                </div>
+                            </li>
+                        </ul>
+                </div>
+                <div class="form-item form_bh">
+                    <input type='hidden' name='uid' value='{$uid}' />
+                    <button class="btn submit-btn ajax-post dialog_submit" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+                </div>
+                </form>
+        </div>
+        </section>
+        </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+    </script>
+
+</html>

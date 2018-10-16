@@ -22,7 +22,8 @@
                 	<if condition="$order['status'] eq '0'">
                 	<div class="handle">
                 		<input type="hidden" name="order_no" class="order_no" value="{$order.order_no}">
-                		<button class="btn ajax-post" target-form="order_no" url="{:U('changeStatus?status=1')}">确认支付</button>
+                		<!-- <button  class="btn ajax-post" target-form="order_no" url="{:U('changeStatus?status=1')}">确认支付</button> -->
+                        <button class="btn" onClick="$.WeiPHP.openSubmitDialog('支付方式','{:addons_url('BeautyMom://Order/pay',array('order_no'=>$order['order_no']))}',400,400)">确认支付</button>
                 		<button class="btn ajax-post" target-form="order_no" url="{:U('changeStatus?status=2')}">取消订单</button>
                 	</div>
                 	</if>
@@ -53,6 +54,12 @@
                     	</php>
                     	<div class="flex-item">订单状态：<span style="color: red;">{$statusName}</span></div>
                     </div>
+                    <if condition="$order['status'] eq '1'">
+                        <div class="flex">
+                            <div class="flex-item">现金支付：<span style="color: red;">{$order.pay_by_cash}(元)</span></div>
+                            <div class="flex-item">金额支付：<span style="color: red;">{$order.pay_by_ecard}(元)</span></div>
+                        </div>
+                    </if>
                     <div class="data-table">
                         <div class="table-striped">
                             <table cellspacing="1">
